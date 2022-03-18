@@ -5,20 +5,31 @@
 //  Created by Efe Mazlumoğlu on 18.03.2022.
 //
 
-import Foundation
+import UIKit
+import ObjectMapper
+import RxDataSources
 
 // MARK: - MatchVideo
-public struct MatchVideo: Codable {
-    let id, matchID, videoID: Int
-    let video: Video
-    let padding, startMatchTime, endMatchTime: Int
-    let eventPeriod: String
+public struct MatchVideo: Codable, Mappable {
+    var id, matchID, videoID: Int
+    var video: Video
+    var padding, startMatchTime, endMatchTime: Int
+    var eventPeriod: String
 
     enum CodingKeys: String, CodingKey {
         case id
         case matchID = "matchId"
         case videoID = "videoId"
         case video, padding, startMatchTime, endMatchTime, eventPeriod
+    }
+    
+    public init?(map: Map) {
+        
+    }
+    
+    public mutating func mapping(map: Map) {
+        id   <- map["id"]
+        matchID   <- map["matchId"]
     }
 }
 
