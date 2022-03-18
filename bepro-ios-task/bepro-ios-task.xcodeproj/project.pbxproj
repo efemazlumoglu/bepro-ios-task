@@ -18,6 +18,8 @@
 		F3CE6F5927E4CD1B00245B27 /* bepro_ios_taskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F5827E4CD1B00245B27 /* bepro_ios_taskUITests.swift */; };
 		F3CE6F5B27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F5A27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift */; };
 		F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6727E4D21000245B27 /* MatchVideo.swift */; };
+		F3CE6F6A27E4D67500245B27 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */; };
+		F3CE6F6C27E4D7C600245B27 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6B27E4D7C600245B27 /* APIService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		F3CE6F5827E4CD1B00245B27 /* bepro_ios_taskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bepro_ios_taskUITests.swift; sourceTree = "<group>"; };
 		F3CE6F5A27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bepro_ios_taskUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F3CE6F6727E4D21000245B27 /* MatchVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchVideo.swift; sourceTree = "<group>"; };
+		F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
+		F3CE6F6B27E4D7C600245B27 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +134,8 @@
 				F3CE6F4227E4CD1B00245B27 /* LaunchScreen.storyboard */,
 				F3CE6F4527E4CD1B00245B27 /* Info.plist */,
 				F3CE6F6727E4D21000245B27 /* MatchVideo.swift */,
+				F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */,
+				F3CE6F6B27E4D7C600245B27 /* APIService.swift */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";
@@ -161,7 +167,6 @@
 				A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */,
 				9CB8359372D1A28DE6AF78F8 /* Pods-bepro-ios-taskTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -404,8 +409,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */,
+				F3CE6F6C27E4D7C600245B27 /* APIService.swift in Sources */,
 				F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */,
 				F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */,
+				F3CE6F6A27E4D67500245B27 /* APIEndpoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
