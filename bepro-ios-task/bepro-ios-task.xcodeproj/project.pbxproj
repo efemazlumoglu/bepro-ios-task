@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4AB536A985EE10A4525A74CF /* Pods_bepro_ios_taskTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6063B4907F1EEC983A0DC494 /* Pods_bepro_ios_taskTests.framework */; };
+		560A0AC6526C39A1D4C950C2 /* Pods_bepro_ios_task.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91862CE075843AFB05B1EF51 /* Pods_bepro_ios_task.framework */; };
+		AC3C2785CD4627A8D315CD2B /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */; };
 		F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */; };
 		F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3B27E4CD1900245B27 /* ViewController.swift */; };
 		F3CE6F4127E4CD1B00245B27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */; };
@@ -35,6 +38,15 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		02C83BD7C303800F11F88566 /* Pods-bepro-ios-task.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-task.release.xcconfig"; path = "Target Support Files/Pods-bepro-ios-task/Pods-bepro-ios-task.release.xcconfig"; sourceTree = "<group>"; };
+		06F9CDC1EF92A8339D4B68A7 /* Pods-bepro-ios-task.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-task.debug.xcconfig"; path = "Target Support Files/Pods-bepro-ios-task/Pods-bepro-ios-task.debug.xcconfig"; sourceTree = "<group>"; };
+		302374EF34923A701E8E435C /* Pods-bepro-ios-task-bepro-ios-taskUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-task-bepro-ios-taskUITests.release.xcconfig"; path = "Target Support Files/Pods-bepro-ios-task-bepro-ios-taskUITests/Pods-bepro-ios-task-bepro-ios-taskUITests.release.xcconfig"; sourceTree = "<group>"; };
+		3C6ACAC1D3A265F3681E2DEB /* Pods-bepro-ios-task-bepro-ios-taskUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-task-bepro-ios-taskUITests.debug.xcconfig"; path = "Target Support Files/Pods-bepro-ios-task-bepro-ios-taskUITests/Pods-bepro-ios-task-bepro-ios-taskUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		6063B4907F1EEC983A0DC494 /* Pods_bepro_ios_taskTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bepro_ios_taskTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91862CE075843AFB05B1EF51 /* Pods_bepro_ios_task.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bepro_ios_task.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bepro_ios_task_bepro_ios_taskUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CB8359372D1A28DE6AF78F8 /* Pods-bepro-ios-taskTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-taskTests.release.xcconfig"; path = "Target Support Files/Pods-bepro-ios-taskTests/Pods-bepro-ios-taskTests.release.xcconfig"; sourceTree = "<group>"; };
+		A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-taskTests.debug.xcconfig"; path = "Target Support Files/Pods-bepro-ios-taskTests/Pods-bepro-ios-taskTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F3CE6F3427E4CD1900245B27 /* bepro-ios-task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bepro-ios-task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3CE6F3B27E4CD1900245B27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -54,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				560A0AC6526C39A1D4C950C2 /* Pods_bepro_ios_task.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -61,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4AB536A985EE10A4525A74CF /* Pods_bepro_ios_taskTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -68,12 +82,23 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AC3C2785CD4627A8D315CD2B /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E9BCEC17373137F07BE2AF4D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				91862CE075843AFB05B1EF51 /* Pods_bepro_ios_task.framework */,
+				9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */,
+				6063B4907F1EEC983A0DC494 /* Pods_bepro_ios_taskTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F3CE6F2B27E4CD1900245B27 = {
 			isa = PBXGroup;
 			children = (
@@ -81,6 +106,8 @@
 				F3CE6F4D27E4CD1B00245B27 /* bepro-ios-taskTests */,
 				F3CE6F5727E4CD1B00245B27 /* bepro-ios-taskUITests */,
 				F3CE6F3527E4CD1900245B27 /* Products */,
+				F5BCCEC1CD51A0F29D30396A /* Pods */,
+				E9BCEC17373137F07BE2AF4D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -124,6 +151,20 @@
 			path = "bepro-ios-taskUITests";
 			sourceTree = "<group>";
 		};
+		F5BCCEC1CD51A0F29D30396A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				06F9CDC1EF92A8339D4B68A7 /* Pods-bepro-ios-task.debug.xcconfig */,
+				02C83BD7C303800F11F88566 /* Pods-bepro-ios-task.release.xcconfig */,
+				3C6ACAC1D3A265F3681E2DEB /* Pods-bepro-ios-task-bepro-ios-taskUITests.debug.xcconfig */,
+				302374EF34923A701E8E435C /* Pods-bepro-ios-task-bepro-ios-taskUITests.release.xcconfig */,
+				A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */,
+				9CB8359372D1A28DE6AF78F8 /* Pods-bepro-ios-taskTests.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -131,9 +172,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3CE6F5E27E4CD1B00245B27 /* Build configuration list for PBXNativeTarget "bepro-ios-task" */;
 			buildPhases = (
+				546F32CD67DB7C62A4256ADE /* [CP] Check Pods Manifest.lock */,
 				F3CE6F3027E4CD1900245B27 /* Sources */,
 				F3CE6F3127E4CD1900245B27 /* Frameworks */,
 				F3CE6F3227E4CD1900245B27 /* Resources */,
+				4F183852DDC5047E53538378 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -148,6 +191,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3CE6F6127E4CD1B00245B27 /* Build configuration list for PBXNativeTarget "bepro-ios-taskTests" */;
 			buildPhases = (
+				75F911078C7D82B4389CCECB /* [CP] Check Pods Manifest.lock */,
 				F3CE6F4627E4CD1B00245B27 /* Sources */,
 				F3CE6F4727E4CD1B00245B27 /* Frameworks */,
 				F3CE6F4827E4CD1B00245B27 /* Resources */,
@@ -166,9 +210,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F3CE6F6427E4CD1B00245B27 /* Build configuration list for PBXNativeTarget "bepro-ios-taskUITests" */;
 			buildPhases = (
+				06AEE3F27222F9869D9165D0 /* [CP] Check Pods Manifest.lock */,
 				F3CE6F5027E4CD1B00245B27 /* Sources */,
 				F3CE6F5127E4CD1B00245B27 /* Frameworks */,
 				F3CE6F5227E4CD1B00245B27 /* Resources */,
+				ABA26A52C89DA4796060E3A9 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -248,6 +294,109 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		06AEE3F27222F9869D9165D0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-bepro-ios-task-bepro-ios-taskUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		4F183852DDC5047E53538378 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task/Pods-bepro-ios-task-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task/Pods-bepro-ios-task-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task/Pods-bepro-ios-task-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		546F32CD67DB7C62A4256ADE /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-bepro-ios-task-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		75F911078C7D82B4389CCECB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-bepro-ios-taskTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		ABA26A52C89DA4796060E3A9 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task-bepro-ios-taskUITests/Pods-bepro-ios-task-bepro-ios-taskUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task-bepro-ios-taskUITests/Pods-bepro-ios-task-bepro-ios-taskUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-bepro-ios-task-bepro-ios-taskUITests/Pods-bepro-ios-task-bepro-ios-taskUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F3CE6F3027E4CD1900245B27 /* Sources */ = {
@@ -422,6 +571,7 @@
 		};
 		F3CE6F5F27E4CD1B00245B27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 06F9CDC1EF92A8339D4B68A7 /* Pods-bepro-ios-task.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -449,6 +599,7 @@
 		};
 		F3CE6F6027E4CD1B00245B27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 02C83BD7C303800F11F88566 /* Pods-bepro-ios-task.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -476,6 +627,7 @@
 		};
 		F3CE6F6227E4CD1B00245B27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -496,6 +648,7 @@
 		};
 		F3CE6F6327E4CD1B00245B27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9CB8359372D1A28DE6AF78F8 /* Pods-bepro-ios-taskTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -516,6 +669,7 @@
 		};
 		F3CE6F6527E4CD1B00245B27 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3C6ACAC1D3A265F3681E2DEB /* Pods-bepro-ios-task-bepro-ios-taskUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -534,6 +688,7 @@
 		};
 		F3CE6F6627E4CD1B00245B27 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 302374EF34923A701E8E435C /* Pods-bepro-ios-task-bepro-ios-taskUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;

@@ -1,0 +1,6 @@
+framework module Pods_bepro_ios_task {
+  umbrella header "Pods-bepro-ios-task-umbrella.h"
+
+  export *
+  module * { export * }
+}
