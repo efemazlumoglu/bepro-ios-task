@@ -14,9 +14,16 @@ import RxCocoa
 class ViewController: UIViewController {
     
     var matchId: Int = 25199
-    var videoUrl: String = ""
+    var firstHalfVideoUrl: String = ""
+    var secondHalfVideoUrl: String = ""
     var matchVideo: MatchVideo?
+    var data: [Datum]?
     let disposeBag = DisposeBag()
+    var firstHalfData: Datum?
+    var secondHalfData: Datum?
+    var firstHalfVideo: Video?
+    var secondHalfVideo: Video?
+    var videoURL: URL?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -32,8 +39,24 @@ class ViewController: UIViewController {
             try client.getMatchVideo(matchId: self.matchId).subscribe(
                 onNext: {
                     result in
-                    print("result: ", result)
+                    
                     self.matchVideo = result
+                    self.data = self.matchVideo?.getData()
+                    
+                    self.firstHalfData = self.data![0]
+                    self.secondHalfData = self.data![1]
+                    
+                    self.firstHalfVideo = self.firstHalfData?.video
+                    self.secondHalfVideo = self.secondHalfData?.video
+                    
+                    self.firstHalfVideoUrl = self.firstHalfVideo!.servingURL
+                    self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
+                    
+                    print(self.firstHalfVideoUrl)
+                    print(self.secondHalfVideoUrl)
+                    
+                    self.videoURL = URL(string: "\(self.firstHalfVideoUrl)")
+                    
                 }, onError: {
                     error in
                     print("error inside view controller: ", error)
@@ -45,12 +68,11 @@ class ViewController: UIViewController {
         }
         
         
-//        let videoURL = URL(string: "\(self.videoUrl)")
-//        let player = AVPlayer(url: videoURL!)
-//        let playerLayer = AVPlayerLayer(player: player)
-//        playerLayer.frame = self.view.bounds
-//        self.view.layer.addSublayer(playerLayer)
-//        player.play()
+        let player = AVPlayer(url: self.videoURL ?? URL(fileURLWithPath: ""))
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.frame = self.view.bounds
+        self.view.layer.addSublayer(playerLayer)
+        player.play()
     }
 
 
