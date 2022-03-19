@@ -9,7 +9,16 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-
+fileprivate extension Encodable {
+  var dictionaryValue:[String: Any?]? {
+      guard let data = try? JSONEncoder().encode(self),
+      let dictionary = try? JSONSerialization.jsonObject(with: data,
+        options: .allowFragments) as? [String: Any] else {
+      return nil
+    }
+    return dictionary
+  }
+}
 
 class APIClient {
     static var shared = APIClient()

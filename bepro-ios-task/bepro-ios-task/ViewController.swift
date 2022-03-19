@@ -36,7 +36,7 @@ class ViewController: UIViewController {
                     self.matchVideo = result
                 }, onError: {
                     error in
-                    print("error: ", error)
+                    print("error inside view controller: ", error)
                 }, onCompleted: {
                     print("completed event")
                 }).disposed(by: disposeBag)
