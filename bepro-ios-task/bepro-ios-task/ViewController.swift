@@ -29,6 +29,7 @@ class ViewController: UIViewController {
     private var matchIdTextField = UITextField()
     public var playerView = UIView()
     public var playButton = UIButton()
+    public var pauseButton = UIButton()
     public var tableView = UITableView()
     public var tableViewCell = UITableViewCell()
     
@@ -80,15 +81,30 @@ class ViewController: UIViewController {
             playButton.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
         ])
         
+        pauseButton.translatesAutoresizingMaskIntoConstraints = false
+        pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
+        pauseButton.backgroundColor = UIColor.red
+        pauseButton.setTitleColor(UIColor.white, for: .normal)
+        pauseButton.layer.cornerRadius = 15
+        pauseButton.setTitle("Pause", for: .normal)
+        self.view.addSubview(pauseButton)
+        
+        NSLayoutConstraint.activate([
+            pauseButton.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 30),
+            pauseButton.heightAnchor.constraint(equalTo: playButton.heightAnchor),
+            pauseButton.leadingAnchor.constraint(equalTo: playButton.leadingAnchor),
+            pauseButton.trailingAnchor.constraint(equalTo: playButton.trailingAnchor)
+        ])
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         self.view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 30),
-            tableView.leadingAnchor.constraint(equalTo: playButton.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: playButton.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
+            tableView.leadingAnchor.constraint(equalTo: pauseButton.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: pauseButton.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
@@ -101,6 +117,10 @@ class ViewController: UIViewController {
     @objc func playTapped() {
         let fileUrl = URL(string: self.firstHalfVideoUrl)!
         videoPlayer.play(url: fileUrl)
+    }
+    
+    @objc func pauseTapped() {
+        videoPlayer.pause()
     }
     
     private func requestSend() {
