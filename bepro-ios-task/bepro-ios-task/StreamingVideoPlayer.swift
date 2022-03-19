@@ -34,11 +34,15 @@ public class StreamingVideoPlayer {
     }
     
     public func play(url: URL) {
-        
+        let asset = AVAsset(url: url)
+        let playerItem = AVPlayerItem(asset: asset)
+        avPlayer.replaceCurrentItem(with: playerItem)
+        playerViewController.player = avPlayer
+        playerViewController.player?.play()
     }
     
     public func pause() {
-        
+        avPlayer.pause()
     }
     
       

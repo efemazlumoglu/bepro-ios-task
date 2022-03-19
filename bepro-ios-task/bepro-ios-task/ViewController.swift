@@ -28,6 +28,7 @@ class ViewController: UIViewController {
     private let videoPlayer = StreamingVideoPlayer()
     private var matchIdTextField = UITextField()
     public var playerView = UIView()
+    public var playButton = UIButton()
     public var tableView = UITableView()
     public var tableViewCell = UITableViewCell()
     
@@ -64,15 +65,30 @@ class ViewController: UIViewController {
             playerView.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
         ])
         
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        playButton.addTarget(self, action: #selector(playTapped), for: .allTouchEvents)
+        playButton.backgroundColor = UIColor.systemBlue
+        playButton.setTitleColor(UIColor.white, for: .normal)
+        playButton.layer.cornerRadius = 15
+        playButton.setTitle("Play", for: .normal)
+        self.view.addSubview(playButton)
+        
+        NSLayoutConstraint.activate([
+            playButton.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
+            playButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
+            playButton.leadingAnchor.constraint(equalTo: matchIdTextField.leadingAnchor),
+            playButton.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
+        ])
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.delegate = self
         tableView.dataSource = self
         self.view.addSubview(tableView)
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
-            tableView.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: playerView.leadingAnchor),
+            tableView.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 30),
+            tableView.leadingAnchor.constraint(equalTo: playButton.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: playButton.leadingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
@@ -80,6 +96,11 @@ class ViewController: UIViewController {
         
         requestSend()
         
+    }
+    
+    @objc func playTapped() {
+        let fileUrl = URL(string: self.firstHalfVideoUrl)!
+        videoPlayer.play(url: fileUrl)
     }
     
     private func requestSend() {
