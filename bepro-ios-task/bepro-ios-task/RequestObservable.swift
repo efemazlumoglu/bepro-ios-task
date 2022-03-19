@@ -28,6 +28,7 @@ public class RequestObservable {
                         let _data = data ?? Data()
                         if (200...399).contains(statusCode) {
                             let objs = try self.jsonDecoder.decode(MatchVideo.self, from: _data)
+                            print("objs : ", objs)
                             observer.onNext(objs)
                         } else {
                             observer.onError(error!)
