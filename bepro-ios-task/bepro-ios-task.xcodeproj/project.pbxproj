@@ -18,10 +18,8 @@
 		F3CE6F5927E4CD1B00245B27 /* bepro_ios_taskUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F5827E4CD1B00245B27 /* bepro_ios_taskUITests.swift */; };
 		F3CE6F5B27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F5A27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift */; };
 		F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6727E4D21000245B27 /* MatchVideo.swift */; };
-		F3CE6F6A27E4D67500245B27 /* APIEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */; };
-		F3CE6F6C27E4D7C600245B27 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6B27E4D7C600245B27 /* APIService.swift */; };
-		F3CE6F6E27E4D9EF00245B27 /* APIRx.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6D27E4D9EF00245B27 /* APIRx.swift */; };
-		F3CE6F7027E4DD1700245B27 /* APIResponses.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6F27E4DD1700245B27 /* APIResponses.swift */; };
+		F3CE6F7427E618C900245B27 /* RequestObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F7327E618C900245B27 /* RequestObservable.swift */; };
+		F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F7527E61B2600245B27 /* APIClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,10 +61,8 @@
 		F3CE6F5827E4CD1B00245B27 /* bepro_ios_taskUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bepro_ios_taskUITests.swift; sourceTree = "<group>"; };
 		F3CE6F5A27E4CD1B00245B27 /* bepro_ios_taskUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = bepro_ios_taskUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F3CE6F6727E4D21000245B27 /* MatchVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchVideo.swift; sourceTree = "<group>"; };
-		F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoints.swift; sourceTree = "<group>"; };
-		F3CE6F6B27E4D7C600245B27 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
-		F3CE6F6D27E4D9EF00245B27 /* APIRx.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIRx.swift; sourceTree = "<group>"; };
-		F3CE6F6F27E4DD1700245B27 /* APIResponses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponses.swift; sourceTree = "<group>"; };
+		F3CE6F7327E618C900245B27 /* RequestObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestObservable.swift; sourceTree = "<group>"; };
+		F3CE6F7527E61B2600245B27 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,10 +134,8 @@
 				F3CE6F4227E4CD1B00245B27 /* LaunchScreen.storyboard */,
 				F3CE6F4527E4CD1B00245B27 /* Info.plist */,
 				F3CE6F6727E4D21000245B27 /* MatchVideo.swift */,
-				F3CE6F6927E4D67500245B27 /* APIEndpoints.swift */,
-				F3CE6F6B27E4D7C600245B27 /* APIService.swift */,
-				F3CE6F6D27E4D9EF00245B27 /* APIRx.swift */,
-				F3CE6F6F27E4DD1700245B27 /* APIResponses.swift */,
+				F3CE6F7327E618C900245B27 /* RequestObservable.swift */,
+				F3CE6F7527E61B2600245B27 /* APIClient.swift */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";
@@ -414,13 +408,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3CE6F7427E618C900245B27 /* RequestObservable.swift in Sources */,
 				F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */,
-				F3CE6F6C27E4D7C600245B27 /* APIService.swift in Sources */,
-				F3CE6F6E27E4D9EF00245B27 /* APIRx.swift in Sources */,
 				F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */,
+				F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */,
 				F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */,
-				F3CE6F7027E4DD1700245B27 /* APIResponses.swift in Sources */,
-				F3CE6F6A27E4D67500245B27 /* APIEndpoints.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
