@@ -27,6 +27,7 @@ class ViewController: UIViewController {
     var listOfOptions: [String] = ["First Half", "Second Half"]
     private let videoPlayer = StreamingVideoPlayer()
     private var matchIdTextField = UITextField()
+    public var activityIndicator = UIActivityIndicatorView()
     public var playerView = UIView()
     public var playButton = UIButton()
     public var pauseButton = UIButton()
@@ -35,6 +36,22 @@ class ViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
+        
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.color = UIColor.white
+        activityIndicator.style = .large
+        self.view.addSubview(activityIndicator)
+        view.bringSubviewToFront(activityIndicator)
+        
+        
+        NSLayoutConstraint.activate([
+            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+        activityIndicator.startAnimating()
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
@@ -143,8 +160,6 @@ class ViewController: UIViewController {
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
                     
                     self.videoURL = URL(string: "\(self.firstHalfVideoUrl)")
-                    
-//                    self.setupVideoPlayer()
                     
                 }, onError: {
                     error in
