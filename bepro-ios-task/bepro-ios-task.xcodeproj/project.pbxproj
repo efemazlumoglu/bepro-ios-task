@@ -20,6 +20,7 @@
 		F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F6727E4D21000245B27 /* MatchVideo.swift */; };
 		F3CE6F7427E618C900245B27 /* RequestObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F7327E618C900245B27 /* RequestObservable.swift */; };
 		F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F7527E61B2600245B27 /* APIClient.swift */; };
+		F3CE6F7827E6311900245B27 /* StreamingVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F7727E6311900245B27 /* StreamingVideoPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		F3CE6F6727E4D21000245B27 /* MatchVideo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchVideo.swift; sourceTree = "<group>"; };
 		F3CE6F7327E618C900245B27 /* RequestObservable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestObservable.swift; sourceTree = "<group>"; };
 		F3CE6F7527E61B2600245B27 /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
+		F3CE6F7727E6311900245B27 /* StreamingVideoPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamingVideoPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -136,6 +138,7 @@
 				F3CE6F6727E4D21000245B27 /* MatchVideo.swift */,
 				F3CE6F7327E618C900245B27 /* RequestObservable.swift */,
 				F3CE6F7527E61B2600245B27 /* APIClient.swift */,
+				F3CE6F7727E6311900245B27 /* StreamingVideoPlayer.swift */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";
@@ -409,6 +412,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3CE6F7427E618C900245B27 /* RequestObservable.swift in Sources */,
+				F3CE6F7827E6311900245B27 /* StreamingVideoPlayer.swift in Sources */,
 				F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */,
 				F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */,
 				F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */,

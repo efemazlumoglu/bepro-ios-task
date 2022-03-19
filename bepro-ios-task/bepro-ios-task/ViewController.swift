@@ -24,6 +24,7 @@ class ViewController: UIViewController {
     var firstHalfVideo: Video?
     var secondHalfVideo: Video?
     var videoURL: URL?
+    private let videoPlayer = StreamingVideoPlayer()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -67,14 +68,12 @@ class ViewController: UIViewController {
             print(error)
         }
         
+        setupVideoPlayer()
         
-        let player = AVPlayer(url: self.videoURL ?? URL(fileURLWithPath: ""))
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = self.view.bounds
-        self.view.layer.addSublayer(playerLayer)
-        player.play()
     }
-
-
+    
+    private func setupVideoPlayer() {
+        videoPlayer.add(to: self.view)
+    }
 }
 
