@@ -8,11 +8,15 @@
 import UIKit
 import Foundation
 import AVFoundation
+import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
     
-    var matchId: Int = 0
+    var matchId: Int = 25199
     var videoUrl: String = ""
+    var matchVideo: MatchVideo?
+    let disposeBag = DisposeBag()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -22,11 +26,30 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let videoURL = URL(string: "\(self.videoUrl)")
-        let player = AVPlayer(url: videoURL!)
-        let playerLayer = AVPlayerLayer(player: player)
-        playerLayer.frame = self.view.bounds
-        self.view.layer.addSublayer(playerLayer)
+        
+        let client = APIClient.shared
+        do {
+            try client.getMatchVideo(matchId: self.matchId).subscribe(
+                onNext: {
+                    result in
+                    print("result: ", result)
+                    self.matchVideo = result
+                }, onError: {
+                    error in
+                    print("error: ", error)
+                }, onCompleted: {
+                    print("completed event")
+                }).disposed(by: disposeBag)
+        } catch {
+            print(error)
+        }
+        
+        
+//        let videoURL = URL(string: "\(self.videoUrl)")
+//        let player = AVPlayer(url: videoURL!)
+//        let playerLayer = AVPlayerLayer(player: player)
+//        playerLayer.frame = self.view.bounds
+//        self.view.layer.addSublayer(playerLayer)
 //        player.play()
     }
 
