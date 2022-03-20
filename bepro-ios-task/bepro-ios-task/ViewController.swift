@@ -41,8 +41,6 @@ class ViewController: UIViewController {
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
-//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-//        view.addGestureRecognizer(tapGesture)
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
         matchIdTextField.text = String(matchId)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
@@ -172,9 +170,10 @@ class ViewController: UIViewController {
     }
     
     func callHalfs(halfOption: String) {
-        self.videoPlayer.pause()
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
-            // alert view cikart
+            let alert = UIAlertController(title: "Warning", message: "Video url cannot found", preferredStyle: UIAlertController.Style.alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         } else {
             var fileUrl = URL(string: self.firstHalfVideoUrl)!
             if halfOption == "First Half" {
@@ -183,10 +182,17 @@ class ViewController: UIViewController {
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
             }
             self.videoPlayer.play(url: fileUrl)
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
         }
     }
     
     private func requestSend() {
+        
+        playButton.isUserInteractionEnabled = false
+        pauseButton.isUserInteractionEnabled = true
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         
         let client = APIClient.shared
         do {
@@ -245,7 +251,7 @@ extension ViewController: UITextFieldDelegate {
         if matchId != 25199 {
             self.matchId = 25199
             textField.text = "25199"
-            let alert = UIAlertController(title: "Warning", message: "If the matchId is not 25199 you have to be logged in", preferredStyle: UIAlertController.Style.alert)
+            let alert = UIAlertController(title: "Warning", message: "If the match Id is not 25199 you have to be logged in", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
@@ -281,7 +287,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.listOfOptions[indexPath.row]
-        print(data)
+        playButton.isUserInteractionEnabled = false
+        pauseButton.isUserInteractionEnabled = true
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
         self.callHalfs(halfOption: data)
     }
     
