@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         playButton.backgroundColor = UIColor.systemBlue
         playButton.setTitleColor(UIColor.white, for: .normal)
         playButton.layer.cornerRadius = 15
-        playButton.setTitle("Play / Get The Match Id", for: .normal)
+        playButton.setTitle("Play", for: .normal)
         self.view.addSubview(playButton)
         
         NSLayoutConstraint.activate([
@@ -103,13 +103,15 @@ class ViewController: UIViewController {
         ])
         
         let myTableView = UITableView()
-        myTableView.frame = CGRect(x: 30, y: view.center.y + 100, width: self.view.bounds.width - 60, height: 300)
+        myTableView.frame = CGRect(x: 30, y: view.center.y + 100, width: self.view.bounds.width - 55, height: self.view.bounds.height - 472)
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.backgroundColor = .lightGray
         myTableView.layer.cornerRadius = 30
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.allowsSelection = true
+        myTableView.allowsMultipleSelection = false
         self.tableView = myTableView
         self.view.addSubview(self.tableView)
         
@@ -165,6 +167,21 @@ class ViewController: UIViewController {
         videoPlayer.pause()
         playButton.isUserInteractionEnabled = true
         pauseButton.isUserInteractionEnabled = false
+    }
+    
+    func callHalfs(halfOption: String) {
+        self.videoPlayer.pause()
+        if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
+            // alert view cikart
+        } else {
+            var fileUrl = URL(string: self.firstHalfVideoUrl)!
+            if halfOption == "First Half" {
+                fileUrl = URL(string: self.firstHalfVideoUrl)!
+            } else {
+                fileUrl = URL(string: self.secondHalfVideoUrl)!
+            }
+            self.videoPlayer.play(url: fileUrl)
+        }
     }
     
     private func requestSend() {
@@ -274,7 +291,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let data = self.listOfOptions[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.backgroundColor = UIColor.white
-        cell.selectionStyle = .none
+        cell.selectionStyle = .blue
         var config = cell.defaultContentConfiguration()
         config.text = data
         if (data == "First Half") {
@@ -287,11 +304,12 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //
+        let data = self.listOfOptions[indexPath.row]
+        self.callHalfs(halfOption: data)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return 90
     }
     
 }
