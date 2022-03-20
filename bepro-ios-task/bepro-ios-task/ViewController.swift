@@ -139,16 +139,23 @@ class ViewController: UIViewController {
     }
     
     @objc func playTapped() {
-        playButton.isUserInteractionEnabled = false
-        pauseButton.isUserInteractionEnabled = true
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        loadView()
-        requestSend()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.stopAnimating()
-            self.loadView()
+        if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
+            playButton.isUserInteractionEnabled = false
+            pauseButton.isUserInteractionEnabled = true
+            activityIndicator.isHidden = false
+            activityIndicator.startAnimating()
+            loadView()
+            requestSend()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+                self.activityIndicator.isHidden = true
+                self.activityIndicator.stopAnimating()
+                self.loadView()
+                let fileUrl = URL(string: self.firstHalfVideoUrl)!
+                self.videoPlayer.play(url: fileUrl)
+            }
+        } else {
+            playButton.isUserInteractionEnabled = false
+            pauseButton.isUserInteractionEnabled = true
             let fileUrl = URL(string: self.firstHalfVideoUrl)!
             self.videoPlayer.play(url: fileUrl)
         }
