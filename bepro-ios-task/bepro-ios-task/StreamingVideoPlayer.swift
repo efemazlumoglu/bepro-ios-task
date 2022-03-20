@@ -21,6 +21,8 @@ public class StreamingVideoPlayer {
         return view
     }()
     
+    @Published private var playing = false
+    
     public init() {}
     
     public func add(to view: UIView) { // get a view parameter from ViewController class and add this view into the playerView
@@ -40,10 +42,17 @@ public class StreamingVideoPlayer {
         avPlayer.replaceCurrentItem(with: playerItem)
         playerViewController.player = avPlayer
         playerViewController.player?.play()
+        playing = true
     }
     
     public func pause() {
-        avPlayer.pause()
+        if playing {
+            avPlayer.pause()
+            playing = false
+        } else {
+            avPlayer.play()
+        }
+        playing.toggle()
     }
     
       

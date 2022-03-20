@@ -74,7 +74,7 @@ class ViewController: UIViewController {
         playButton.backgroundColor = UIColor.systemBlue
         playButton.setTitleColor(UIColor.white, for: .normal)
         playButton.layer.cornerRadius = 15
-        playButton.setTitle("Play", for: .normal)
+        playButton.setTitle("Play / Get The Match Id", for: .normal)
         self.view.addSubview(playButton)
         
         NSLayoutConstraint.activate([
@@ -146,13 +146,6 @@ class ViewController: UIViewController {
             activityIndicator.startAnimating()
             loadView()
             requestSend()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-                self.activityIndicator.isHidden = true
-                self.activityIndicator.stopAnimating()
-                self.loadView()
-                let fileUrl = URL(string: self.firstHalfVideoUrl)!
-                self.videoPlayer.play(url: fileUrl)
-            }
         } else {
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
@@ -187,6 +180,14 @@ class ViewController: UIViewController {
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
                     
                     self.videoURL = URL(string: "\(self.firstHalfVideoUrl)")
+                    
+                    DispatchQueue.main.async {
+                        self.activityIndicator.isHidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.loadView()
+                        let fileUrl = URL(string: self.firstHalfVideoUrl)!
+                        self.videoPlayer.play(url: fileUrl)
+                    }
                     
                 }, onError: {
                     error in
