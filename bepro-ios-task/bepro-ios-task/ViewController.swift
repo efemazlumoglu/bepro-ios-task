@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     var secondHalfData: Datum?
     var firstHalfVideo: Video?
     var secondHalfVideo: Video?
+    var firstHalfVideoTitle: String = ""
+    var secondHalfVideoTitle: String = ""
     var videoURL: URL?
     var listOfOptions: [String] = ["First Half", "Second Half"]
     private let generalView = UIScrollView()
@@ -32,14 +34,16 @@ class ViewController: UIViewController {
     public var playerView = UIView()
     public var playButton = UIButton()
     public var pauseButton = UIButton()
-    public var tableView = UITableView()
-    public var tableViewCell = UITableViewCell()
+    public var myTableView = UITableView()
+    public var tableViewCell = MyTableViewCell()
     
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -86,7 +90,7 @@ class ViewController: UIViewController {
         
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
-        pauseButton.backgroundColor = UIColor.red
+        pauseButton.backgroundColor = UIColor.systemRed
         pauseButton.setTitleColor(UIColor.white, for: .normal)
         pauseButton.layer.cornerRadius = 15
         pauseButton.setTitle("Pause", for: .normal)
@@ -99,17 +103,22 @@ class ViewController: UIViewController {
             pauseButton.trailingAnchor.constraint(equalTo: playButton.trailingAnchor)
         ])
         
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.view.addSubview(tableView)
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.backgroundColor = .lightGray
+        myTableView.register(MyTableViewCell.self, forCellReuseIdentifier: "cell")
+        self.view.addSubview(myTableView)
+        
+        self.myTableView.reloadData()
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
-            tableView.leadingAnchor.constraint(equalTo: pauseButton.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: pauseButton.leadingAnchor),
-            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            myTableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
+            myTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            myTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
         
         if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
@@ -136,6 +145,10 @@ class ViewController: UIViewController {
         
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
+    }
+    
+    @objc func dismissKeyboard() {
+        self.matchIdTextField.resignFirstResponder()
     }
     
     @objc func playTapped() {
@@ -174,6 +187,9 @@ class ViewController: UIViewController {
                     
                     self.firstHalfVideo = self.firstHalfData?.video
                     self.secondHalfVideo = self.secondHalfData?.video
+                    
+                    self.firstHalfVideoTitle = self.firstHalfVideo!.title
+                    self.secondHalfVideoTitle = self.secondHalfVideo!.title
                     
                     self.firstHalfVideoUrl = self.firstHalfVideo!.servingURL
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
@@ -260,12 +276,23 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myTableViewCell", for: indexPath)
+        let data = self.listOfOptions[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyTableViewCell
+        cell.name.text = data
+        if (data == "First Half") {
+            cell.title.text = self.firstHalfVideoTitle
+        } else {
+            cell.title.text = self.secondHalfVideoTitle
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 44
     }
     
 }
