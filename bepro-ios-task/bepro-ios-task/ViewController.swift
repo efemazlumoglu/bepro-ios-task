@@ -115,14 +115,6 @@ class ViewController: UIViewController {
         
         self.tableView.reloadData()
         
-//        NSLayoutConstraint.activate([
-//            myTableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
-//            myTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            myTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-//            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-//        ])
-        
-        
         if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
