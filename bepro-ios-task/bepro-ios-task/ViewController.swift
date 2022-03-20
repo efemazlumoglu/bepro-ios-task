@@ -34,8 +34,7 @@ class ViewController: UIViewController {
     public var playerView = UIView()
     public var playButton = UIButton()
     public var pauseButton = UIButton()
-    public var myTableView = UITableView()
-    public var tableViewCell = MyTableViewCell()
+    public var tableView: UITableView!
     
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
@@ -103,21 +102,25 @@ class ViewController: UIViewController {
             pauseButton.trailingAnchor.constraint(equalTo: playButton.trailingAnchor)
         ])
         
+        let myTableView = UITableView()
+        myTableView.frame = CGRect(x: 30, y: view.center.y + 100, width: self.view.bounds.width - 60, height: 300)
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.backgroundColor = .lightGray
-        myTableView.register(MyTableViewCell.self, forCellReuseIdentifier: "cell")
-        self.view.addSubview(myTableView)
+        myTableView.layer.cornerRadius = 30
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        self.tableView = myTableView
+        self.view.addSubview(self.tableView)
         
-        self.myTableView.reloadData()
+        self.tableView.reloadData()
         
-        NSLayoutConstraint.activate([
-            myTableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
-            myTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            myTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
-        ])
+//        NSLayoutConstraint.activate([
+//            myTableView.topAnchor.constraint(equalTo: pauseButton.bottomAnchor, constant: 30),
+//            myTableView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//            myTableView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+//            myTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+//        ])
         
         
         if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
@@ -277,13 +280,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = self.listOfOptions[indexPath.row]
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! MyTableViewCell
-        cell.name.text = data
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        cell.backgroundColor = UIColor.white
+        cell.selectionStyle = .none
+        var config = cell.defaultContentConfiguration()
+        config.text = data
         if (data == "First Half") {
-            cell.title.text = self.firstHalfVideoTitle
+            config.secondaryText = self.firstHalfVideoTitle
         } else {
-            cell.title.text = self.secondHalfVideoTitle
+            config.secondaryText = self.secondHalfVideoTitle
         }
+        cell.contentConfiguration = config
         return cell
     }
     
@@ -292,7 +299,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 44
+        return 80
     }
     
 }
