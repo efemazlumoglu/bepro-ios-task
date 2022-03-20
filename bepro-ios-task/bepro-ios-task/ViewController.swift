@@ -76,6 +76,10 @@ class ViewController: UIViewController {
         
         progressView.progressTintColor = .blue
         progressView.translatesAutoresizingMaskIntoConstraints = false
+        videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
+            let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
+            self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
+        }
         self.view.addSubview(progressView)
         
         NSLayoutConstraint.activate([

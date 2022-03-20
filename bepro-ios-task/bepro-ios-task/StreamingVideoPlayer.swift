@@ -11,11 +11,11 @@ import AVFoundation
 import AVKit
 
 public class StreamingVideoPlayer {
-    private let playerViewController = AVPlayerViewController() // i use AVFoundation and AVKit for playing this video
+    public let playerViewController = AVPlayerViewController() // i use AVFoundation and AVKit for playing this video
     
-    private let avPlayer = AVPlayer()
+    public let avPlayer = AVPlayer()
     
-    private lazy var playerView: UIView = {
+    public lazy var playerView: UIView = {
         let view = playerViewController.view!
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
