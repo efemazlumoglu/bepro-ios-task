@@ -144,12 +144,12 @@ class ViewController: UIViewController {
             pauseButton.isUserInteractionEnabled = true
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
-            loadView()
+            loadView() // i called this method to re render the view
             requestSend()
         } else {
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
-            self.videoPlayer.playPause()
+            self.videoPlayer.playPause() // this method is for paused player to seek the where it is left in the video player as seconds.
         }
     }
     
