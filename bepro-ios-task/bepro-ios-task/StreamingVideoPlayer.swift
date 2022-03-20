@@ -28,7 +28,6 @@ public class StreamingVideoPlayer {
     public init() {}
     
     public func add(to view: UIView) { // get a view parameter from ViewController class and add this view into the playerView
-        playerView.layer.cornerRadius = 20
         view.addSubview(playerView)
         NSLayoutConstraint.activate([
             playerView.topAnchor.constraint(equalTo: view.topAnchor),

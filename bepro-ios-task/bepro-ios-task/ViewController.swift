@@ -25,13 +25,16 @@ class ViewController: UIViewController {
     var secondHalfVideo: Video?
     var firstHalfVideoTitle: String = ""
     var secondHalfVideoTitle: String = ""
-    var videoURL: URL?
+    var videoURL: String = ""
     var listOfOptions: [String] = ["First Half", "Second Half"]
-    private let generalView = UIScrollView()
+    var hideTableViewBool: Bool = true
+    var contentViewHideBool: Bool = true
     private let videoPlayer = StreamingVideoPlayer()
+    let progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
     private var matchIdTextField = UITextField()
     public var activityIndicator = UIActivityIndicatorView()
     public var playerView = UIView()
+    public var contentView = UIView()
     public var playButton = UIButton()
     public var pauseButton = UIButton()
     public var tableView: UITableView!
@@ -66,9 +69,31 @@ class ViewController: UIViewController {
         
         NSLayoutConstraint.activate([
             playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 30),
-            playerView.leadingAnchor.constraint(equalTo: matchIdTextField.leadingAnchor),
-            playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 156),
-            playerView.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
+            playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 186),
+            playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        progressView.progressTintColor = .blue
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        self.view.addSubview(progressView)
+        
+        NSLayoutConstraint.activate([
+            progressView.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
+            progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 5),
+            progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.isHidden = contentViewHideBool
+        self.view.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 10),
+            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contentView.heightAnchor.constraint(equalTo: playerView.heightAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
         playButton.translatesAutoresizingMaskIntoConstraints = false
@@ -77,40 +102,39 @@ class ViewController: UIViewController {
         playButton.setTitleColor(UIColor.white, for: .normal)
         playButton.layer.cornerRadius = 15
         playButton.setTitle("Play", for: .normal)
-        self.view.addSubview(playButton)
-        
-        NSLayoutConstraint.activate([
-            playButton.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
-            playButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
-            playButton.leadingAnchor.constraint(equalTo: matchIdTextField.leadingAnchor),
-            playButton.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
-        ])
+        self.contentView.addSubview(playButton)
         
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
-        pauseButton.backgroundColor = UIColor.systemRed
-        pauseButton.setTitleColor(UIColor.white, for: .normal)
+        pauseButton.backgroundColor = UIColor.white
+        pauseButton.setTitleColor(UIColor.blue, for: .normal)
         pauseButton.layer.cornerRadius = 15
         pauseButton.setTitle("Pause", for: .normal)
-        self.view.addSubview(pauseButton)
+        self.contentView.addSubview(pauseButton)
         
         NSLayoutConstraint.activate([
-            pauseButton.topAnchor.constraint(equalTo: playButton.bottomAnchor, constant: 30),
+            playButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            playButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
+            playButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            playButton.widthAnchor.constraint(equalToConstant: 140),
+            
+            pauseButton.topAnchor.constraint(equalTo: contentView.topAnchor),
             pauseButton.heightAnchor.constraint(equalTo: playButton.heightAnchor),
-            pauseButton.leadingAnchor.constraint(equalTo: playButton.leadingAnchor),
-            pauseButton.trailingAnchor.constraint(equalTo: playButton.trailingAnchor)
+            pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            pauseButton.widthAnchor.constraint(equalToConstant: 140)
         ])
         
+        
         let myTableView = UITableView()
-        myTableView.frame = CGRect(x: 30, y: view.center.y + 100, width: self.view.bounds.width - 55, height: self.view.bounds.height - 472)
+        myTableView.frame = CGRect(x: 0, y: view.center.y + 120, width: self.view.bounds.width, height: self.view.bounds.height - 402)
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.backgroundColor = .lightGray
-        myTableView.layer.cornerRadius = 30
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.allowsSelection = true
         myTableView.allowsMultipleSelection = false
+        myTableView.isHidden = hideTableViewBool
         self.tableView = myTableView
         self.view.addSubview(self.tableView)
         
@@ -124,6 +148,7 @@ class ViewController: UIViewController {
             view.addSubview(blurEffectView)
             
             activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.startAnimating()
             activityIndicator.color = UIColor.white
             activityIndicator.style = .large
             self.view.addSubview(activityIndicator)
@@ -135,13 +160,9 @@ class ViewController: UIViewController {
                 activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
                 activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
             ])
-            
-            activityIndicator.startAnimating()
         }
         
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
-        
-        requestSend()
         
     }
     
@@ -177,8 +198,10 @@ class ViewController: UIViewController {
         } else {
             var fileUrl = URL(string: self.firstHalfVideoUrl)!
             if halfOption == "First Half" {
+                videoURL = "First Half"
                 fileUrl = URL(string: self.firstHalfVideoUrl)!
             } else {
+                videoURL = "Second Half"
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
             }
             self.videoPlayer.play(url: fileUrl)
@@ -215,13 +238,14 @@ class ViewController: UIViewController {
                     self.firstHalfVideoUrl = self.firstHalfVideo!.servingURL
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
                     
-                    self.videoURL = URL(string: "\(self.firstHalfVideoUrl)")
-                    
                     DispatchQueue.main.async {
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
-                        let fileUrl = URL(string: self.firstHalfVideoUrl)!
-                        self.videoPlayer.play(url: fileUrl)
+                        self.callHalfs(halfOption: "First Half")
+                        self.videoURL = "First Half"
+                        self.hideTableViewBool = false
+                        self.contentViewHideBool = false
+                        self.loadView()
                         self.tableView.reloadData()
                     }
                     
@@ -255,6 +279,13 @@ extension ViewController: UITextFieldDelegate {
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
+            playButton.isUserInteractionEnabled = false
+            pauseButton.isUserInteractionEnabled = true
+            activityIndicator.isHidden = false
+            hideTableViewBool = true
+            contentViewHideBool = true
+            activityIndicator.startAnimating()
+            loadView()
             requestSend()
         }
         // may be useful: textField.resignFirstResponder()
@@ -275,11 +306,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.backgroundColor = UIColor.white
         cell.selectionStyle = .blue
         var config = cell.defaultContentConfiguration()
-        config.text = data
         if (data == "First Half") {
-            config.secondaryText = self.firstHalfVideoTitle
+            config.text = self.firstHalfVideoTitle
         } else {
-            config.secondaryText = self.secondHalfVideoTitle
+            config.text = self.secondHalfVideoTitle
         }
         cell.contentConfiguration = config
         return cell
@@ -291,7 +321,9 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         pauseButton.isUserInteractionEnabled = true
         activityIndicator.isHidden = false
         activityIndicator.startAnimating()
-        self.callHalfs(halfOption: data)
+        if videoURL != data {
+            self.callHalfs(halfOption: data)
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
