@@ -41,9 +41,10 @@ class ViewController: UIViewController {
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
+//        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+//        view.addGestureRecognizer(tapGesture)
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
+        matchIdTextField.text = String(matchId)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
         matchIdTextField.keyboardType = UIKeyboardType.default
@@ -142,6 +143,8 @@ class ViewController: UIViewController {
         
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
+        requestSend()
+        
     }
     
     @objc func dismissKeyboard() {
@@ -155,7 +158,6 @@ class ViewController: UIViewController {
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             loadView() // i called this method to re render the view
-            requestSend()
         } else {
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
@@ -185,6 +187,7 @@ class ViewController: UIViewController {
     }
     
     private func requestSend() {
+        
         let client = APIClient.shared
         do {
             try client.getMatchVideo(matchId: self.matchId).subscribe(
@@ -211,9 +214,9 @@ class ViewController: UIViewController {
                     DispatchQueue.main.async {
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
-                        self.loadView()
                         let fileUrl = URL(string: self.firstHalfVideoUrl)!
                         self.videoPlayer.play(url: fileUrl)
+                        self.tableView.reloadData()
                     }
                     
                 }, onError: {
@@ -276,6 +279,9 @@ extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         // called when 'return' key pressed. return NO to ignore.
         print("TextField should return method called")
+        let matchId: Int = Int(textField.text!)!
+        self.matchId = matchId
+        requestSend()
         // may be useful: textField.resignFirstResponder()
         return true
     }
@@ -305,6 +311,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.listOfOptions[indexPath.row]
+        print(data)
         self.callHalfs(halfOption: data)
     }
     
