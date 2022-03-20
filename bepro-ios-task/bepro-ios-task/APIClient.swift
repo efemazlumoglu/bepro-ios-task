@@ -9,7 +9,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-fileprivate extension Encodable {
+fileprivate extension Encodable { // this extension is for dictionary values casting if it is necesssary
   var dictionaryValue:[String: Any?]? {
       guard let data = try? JSONEncoder().encode(self),
       let dictionary = try? JSONSerialization.jsonObject(with: data,
@@ -20,7 +20,7 @@ fileprivate extension Encodable {
   }
 }
 
-class APIClient {
+class APIClient { // this client is for getting match videos API Call 
     static var shared = APIClient()
     lazy var requestObservable = RequestObservable(config: .default)
     func getMatchVideo(matchId: Int) throws -> Observable<MatchVideo> {

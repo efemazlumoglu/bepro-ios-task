@@ -11,7 +11,7 @@ import AVFoundation
 import AVKit
 
 public class StreamingVideoPlayer {
-    private let playerViewController = AVPlayerViewController()
+    private let playerViewController = AVPlayerViewController() // i use AVFoundation and AVKit for playing this video
     
     private let avPlayer = AVPlayer()
     
@@ -23,7 +23,7 @@ public class StreamingVideoPlayer {
     
     public init() {}
     
-    public func add(to view: UIView) {
+    public func add(to view: UIView) { // get a view parameter from ViewController class and add this view into the playerView
         playerView.layer.cornerRadius = 20
         view.addSubview(playerView)
         NSLayoutConstraint.activate([
@@ -34,7 +34,7 @@ public class StreamingVideoPlayer {
         ])
     }
     
-    public func play(url: URL) {
+    public func play(url: URL) { // to work with m3u file extensions you have to use AVAsset otherwise it will not work or i did not know how to implement :)
         let asset = AVAsset(url: url)
         let playerItem = AVPlayerItem(asset: asset)
         avPlayer.replaceCurrentItem(with: playerItem)

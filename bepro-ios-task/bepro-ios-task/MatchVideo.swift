@@ -9,7 +9,7 @@ import UIKit
 
 // MARK: - MatchVideo
 
-public struct MatchVideo: Codable {
+public struct MatchVideo: Codable { // this have data inside of it 
     var data: [Datum]
     
     enum CodingKeys: String, CodingKey {

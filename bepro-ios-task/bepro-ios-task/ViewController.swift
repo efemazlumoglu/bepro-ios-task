@@ -13,7 +13,7 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
-    var matchId: Int = 25199
+    var matchId: Int = 25199 // when you put other id here it will need a logged in user
     var firstHalfVideoUrl: String = ""
     var secondHalfVideoUrl: String = ""
     var matchVideo: MatchVideo?
@@ -35,7 +35,7 @@ class ViewController: UIViewController {
     public var tableView = UITableView()
     public var tableViewCell = UITableViewCell()
     
-    override func loadView() {
+    override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(matchIdTextField)
         
-        NSLayoutConstraint.activate([
+        NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
             matchIdTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             matchIdTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             matchIdTextField.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor),
@@ -111,7 +111,7 @@ class ViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        if (!activityIndicator.isHidden) {
+        if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
             blurEffectView.frame = view.bounds
@@ -134,12 +134,12 @@ class ViewController: UIViewController {
             activityIndicator.startAnimating()
         }
         
-        setupVideoPlayer()
+        setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
     }
     
     @objc func playTapped() {
-        if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
+        if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
             activityIndicator.isHidden = false

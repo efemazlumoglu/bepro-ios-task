@@ -10,8 +10,6 @@ target 'bepro-ios-task' do
     pod 'RxCocoa', '~> 5.0'
     pod 'RxSwiftExt', '~> 5.1'
     pod 'RxDataSources', '~> 4.0'
-    pod 'Alamofire', '~> 4.7'
-    pod "AlamofireObjectMapper", "~> 5.2"
 
   target 'bepro-ios-taskTests' do
     inherit! :search_paths
