@@ -25,6 +25,7 @@ class ViewController: UIViewController {
     var secondHalfVideo: Video?
     var videoURL: URL?
     var listOfOptions: [String] = ["First Half", "Second Half"]
+    private let generalView = UIScrollView()
     private let videoPlayer = StreamingVideoPlayer()
     private var matchIdTextField = UITextField()
     public var activityIndicator = UIActivityIndicatorView()
@@ -36,22 +37,6 @@ class ViewController: UIViewController {
     
     override func loadView() {
         super.loadView()
-        
-        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-        activityIndicator.color = UIColor.white
-        activityIndicator.style = .large
-        self.view.addSubview(activityIndicator)
-        view.bringSubviewToFront(activityIndicator)
-        
-        
-        NSLayoutConstraint.activate([
-            activityIndicator.widthAnchor.constraint(equalToConstant: 50),
-            activityIndicator.heightAnchor.constraint(equalToConstant: 50),
-            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-        
-        activityIndicator.startAnimating()
         
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
@@ -74,12 +59,13 @@ class ViewController: UIViewController {
         ])
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.layer.cornerRadius = 20
         self.view.addSubview(playerView)
         
         NSLayoutConstraint.activate([
             playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 30),
             playerView.leadingAnchor.constraint(equalTo: matchIdTextField.leadingAnchor),
-            playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 126),
+            playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 156),
             playerView.trailingAnchor.constraint(equalTo: matchIdTextField.trailingAnchor)
         ])
         
@@ -125,19 +111,53 @@ class ViewController: UIViewController {
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        setupVideoPlayer()
+        if (!activityIndicator.isHidden) {
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.addSubview(blurEffectView)
+            
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.color = UIColor.white
+            activityIndicator.style = .large
+            self.view.addSubview(activityIndicator)
+            self.view.bringSubviewToFront(activityIndicator)
+            
+            NSLayoutConstraint.activate([
+                activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+                activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+                activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+            
+            activityIndicator.startAnimating()
+        }
         
-        requestSend()
+        setupVideoPlayer()
         
     }
     
     @objc func playTapped() {
-        let fileUrl = URL(string: self.firstHalfVideoUrl)!
-        videoPlayer.play(url: fileUrl)
+        playButton.isUserInteractionEnabled = false
+        pauseButton.isUserInteractionEnabled = true
+        activityIndicator.isHidden = false
+        activityIndicator.startAnimating()
+        loadView()
+        requestSend()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
+            self.activityIndicator.isHidden = true
+            self.activityIndicator.stopAnimating()
+            self.loadView()
+            let fileUrl = URL(string: self.firstHalfVideoUrl)!
+            self.videoPlayer.play(url: fileUrl)
+        }
     }
     
     @objc func pauseTapped() {
         videoPlayer.pause()
+        playButton.isUserInteractionEnabled = true
+        pauseButton.isUserInteractionEnabled = false
     }
     
     private func requestSend() {
