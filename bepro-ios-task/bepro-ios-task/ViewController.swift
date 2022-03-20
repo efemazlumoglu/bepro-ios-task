@@ -149,8 +149,7 @@ class ViewController: UIViewController {
         } else {
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
-            let fileUrl = URL(string: self.firstHalfVideoUrl)!
-            self.videoPlayer.play(url: fileUrl)
+            self.videoPlayer.playPause()
         }
     }
     

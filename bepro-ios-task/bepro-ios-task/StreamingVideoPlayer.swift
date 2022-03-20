@@ -20,8 +20,10 @@ public class StreamingVideoPlayer {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
-    @Published private var playing = false
+
+    var t1: Float = 0.0
+    var t2: Float = 0.0
+    var currentSeconds: Float = 0.0
     
     public init() {}
     
@@ -42,17 +44,19 @@ public class StreamingVideoPlayer {
         avPlayer.replaceCurrentItem(with: playerItem)
         playerViewController.player = avPlayer
         playerViewController.player?.play()
-        playing = true
+    }
+    
+    public func playPause() {
+        avPlayer.seek(to: CMTime(seconds: Double(self.currentSeconds), preferredTimescale: .max))
+        avPlayer.play()
     }
     
     public func pause() {
-        if playing {
-            avPlayer.pause()
-            playing = false
-        } else {
-            avPlayer.play()
-        }
-        playing.toggle()
+        avPlayer.pause()
+        self.t1 = Float(avPlayer.currentTime().value)
+        self.t2 = Float(avPlayer.currentTime().timescale)
+        self.currentSeconds = t1 / t2
+        print(self.currentSeconds)
     }
     
       
