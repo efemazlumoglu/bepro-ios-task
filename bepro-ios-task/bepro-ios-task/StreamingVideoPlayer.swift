@@ -55,7 +55,6 @@ public class StreamingVideoPlayer {
         self.t1 = Float(avPlayer.currentTime().value)
         self.t2 = Float(avPlayer.currentTime().timescale)
         self.currentSeconds = t1 / t2
-        print(self.currentSeconds)
     }
     
       
