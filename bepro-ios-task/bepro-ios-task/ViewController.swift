@@ -29,12 +29,15 @@ class ViewController: UIViewController {
     var listOfOptions: [String] = ["First Half", "Second Half"]
     var hideTableViewBool: Bool = true
     var contentViewHideBool: Bool = true
+    var progressBarHideBool: Bool = true
     var isPortraitBool: Bool = true
     var isLandscapeBool: Bool = false
     var portraitHeight: CGFloat = 0
     var portraitWidth: CGFloat = 0
     var portraitCenterY: CGFloat = 0
     private let videoPlayer = StreamingVideoPlayer()
+    var totalTime = UILabel()
+    var currentTime = UILabel()
     let progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
     private var matchIdTextField = UITextField()
     public var activityIndicator = UIActivityIndicatorView()
@@ -62,6 +65,7 @@ class ViewController: UIViewController {
             isPortraitBool = false
             hideTableViewBool = true
             contentViewHideBool = true
+            progressBarHideBool = true
             loadView()
         } else if UIDevice.current.orientation.isFlat {
             print("flat")
@@ -72,6 +76,7 @@ class ViewController: UIViewController {
             if (self.firstHalfVideoUrl != "") {
                 hideTableViewBool = false
                 contentViewHideBool = false
+                progressBarHideBool = false
             }
             loadView()
         } else if UIDevice.current.orientation.isValidInterfaceOrientation {
@@ -117,9 +122,9 @@ class ViewController: UIViewController {
         
         if isPortraitBool {
             NSLayoutConstraint.activate([
-                playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 30),
+                playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 10),
                 playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 186),
+                playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 206),
                 playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             ])
         } else {
@@ -135,30 +140,37 @@ class ViewController: UIViewController {
             
         }
         
-        progressView.progressTintColor = .blue
-        progressView.isHidden = false
+        totalTime.translatesAutoresizingMaskIntoConstraints = false
+        currentTime.translatesAutoresizingMaskIntoConstraints = false
+        
+        progressView.progressTintColor = .systemBlue
+        progressView.isHidden = progressBarHideBool
+        progressView.backgroundColor = .systemGray3
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        if isLandscapeBool {
-            progressView.isHidden = true
-        }
+        progressView.layer.cornerRadius = 20
         videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
             let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
+            self.totalTime.text = self.videoPlayer.avPlayer.currentItem!.duration.displayTime
+            self.currentTime.text = self.videoPlayer.avPlayer.currentItem?.currentTime().displayTime
             self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
         }
+        self.view.addSubview(totalTime)
+        self.view.addSubview(currentTime)
         self.view.addSubview(progressView)
         
         NSLayoutConstraint.activate([
-            progressView.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
-            progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            currentTime.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 5),
+            currentTime.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            totalTime.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 5),
+            totalTime.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
+            progressView.topAnchor.constraint(equalTo: currentTime.bottomAnchor, constant: 5),
+            progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             progressView.heightAnchor.constraint(equalToConstant: 5),
-            progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+            progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.isHidden = contentViewHideBool
-        if isLandscapeBool {
-            contentView.isHidden = true
-        }
         self.view.addSubview(contentView)
         
         NSLayoutConstraint.activate([
@@ -202,7 +214,7 @@ class ViewController: UIViewController {
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.backgroundColor = .lightGray
+        myTableView.backgroundColor = .systemOrange
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.allowsSelection = true
         myTableView.allowsMultipleSelection = false
@@ -317,6 +329,7 @@ class ViewController: UIViewController {
                         self.videoURL = "First Half"
                         self.hideTableViewBool = false
                         self.contentViewHideBool = false
+                        self.progressBarHideBool = false
                         self.loadView()
                         self.tableView.reloadData()
                     }
@@ -356,6 +369,7 @@ extension ViewController: UITextFieldDelegate {
             activityIndicator.isHidden = false
             hideTableViewBool = true
             contentViewHideBool = true
+            progressBarHideBool = true
             activityIndicator.startAnimating()
             loadView()
             requestSend()
@@ -375,7 +389,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = self.listOfOptions[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = UIColor.white
+        cell.backgroundColor = UIColor.systemOrange
         cell.selectionStyle = .blue
         var config = cell.defaultContentConfiguration()
         if (data == "First Half") {
@@ -402,4 +416,26 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return 90
     }
     
+}
+
+extension CMTime {
+    public var displayTime: String? {
+        guard let sec = seconds?.rounded() else { return nil }
+
+        let formatter = DateComponentsFormatter()
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        if sec < 60 * 60 {
+            formatter.allowedUnits = [.minute, .second]
+        } else {
+            formatter.allowedUnits = [.hour, .minute, .second]
+        }
+        return formatter.string(from: sec) ?? nil
+    }
+
+    public var seconds: Double? {
+        let time = CMTimeGetSeconds(self)
+        guard time.isNaN == false else { return nil }
+        return time
+    }
 }
