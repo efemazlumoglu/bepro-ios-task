@@ -299,9 +299,11 @@ class ViewController: UIViewController {
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
             }
             self.videoPlayer.play(url: fileUrl)
-            self.activityIndicator.isHidden = true
-            self.activityIndicator.stopAnimating()
         }
+    }
+    
+    private func setupVideoPlayer() {
+        videoPlayer.add(to: self.playerView)
     }
     
     private func requestSend() {
@@ -333,10 +335,10 @@ class ViewController: UIViewController {
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
                     
                     DispatchQueue.main.async {
+                        self.videoURL = "First Half"
+                        self.callHalfs(halfOption: "First Half")
                         self.activityIndicator.isHidden = true
                         self.activityIndicator.stopAnimating()
-                        self.callHalfs(halfOption: "First Half")
-                        self.videoURL = "First Half"
                         self.hideTableViewBool = false
                         self.contentViewHideBool = false
                         self.progressBarHideBool = false
@@ -353,10 +355,6 @@ class ViewController: UIViewController {
         } catch {
             print(error)
         }
-    }
-    
-    private func setupVideoPlayer() {
-        videoPlayer.add(to: self.playerView)
     }
     
 }
