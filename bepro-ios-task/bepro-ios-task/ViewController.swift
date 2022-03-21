@@ -96,6 +96,7 @@ class ViewController: UIViewController {
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
         
+        NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil)
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
@@ -170,6 +171,8 @@ class ViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 5),
             progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
+        
+        
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.isHidden = contentViewHideBool
@@ -250,6 +253,15 @@ class ViewController: UIViewController {
         
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
+    }
+    
+    @objc func playingFinished() {
+        if videoURL == "First Half" {
+            var fileUrl = URL(string: self.firstHalfVideoUrl)!
+            videoURL = "Second Half"
+            fileUrl = URL(string: self.secondHalfVideoUrl)!
+            self.videoPlayer.play(url: fileUrl)
+        }
     }
     
     @objc func playTapped() {

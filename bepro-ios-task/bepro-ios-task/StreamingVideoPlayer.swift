@@ -43,6 +43,7 @@ public class StreamingVideoPlayer {
         avPlayer.replaceCurrentItem(with: playerItem)
         playerViewController.player = avPlayer
         playerViewController.player?.play()
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
     }
     
     public func playPause() { // this method is for playing where you have left in the video
@@ -55,6 +56,11 @@ public class StreamingVideoPlayer {
         self.t1 = Float(avPlayer.currentTime().value)
         self.t2 = Float(avPlayer.currentTime().timescale)
         self.currentSeconds = t1 / t2 // to get the currentSeconds cause i need to seek that time when you play it again
+    }
+    
+    @objc func playerDidFinishPlaying(note: NSNotification){
+        print("Video Finished")
+        NotificationCenter.default.post(name: Notification.Name("PlayingFinished"), object: nil)
     }
     
       
