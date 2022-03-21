@@ -65,12 +65,12 @@ class ViewController: UIViewController {
         
         if isLandscapeBool {
             self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
-            matchIdTextField.placeholder = "Enter Match Id Here"
+            matchIdTextField.placeholder = "Enter Match Id Here To Send The Request"
             matchIdTextField.font = UIFont.systemFont(ofSize: 15)
             matchIdTextField.text = String(matchId)
             matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
             matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
-            matchIdTextField.keyboardType = UIKeyboardType.default
+            matchIdTextField.keyboardType = UIKeyboardType.numberPad
             matchIdTextField.returnKeyType = UIReturnKeyType.done
             matchIdTextField.clearButtonMode = UITextField.ViewMode.whileEditing
             matchIdTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
