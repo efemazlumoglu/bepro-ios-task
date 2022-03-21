@@ -43,7 +43,7 @@ public class StreamingVideoPlayer {
         avPlayer.replaceCurrentItem(with: playerItem)
         playerViewController.player = avPlayer
         playerViewController.player?.play()
-        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil) // did play to end time observer
     }
     
     public func playPause() { // this method is for playing where you have left in the video
@@ -60,7 +60,7 @@ public class StreamingVideoPlayer {
     
     @objc func playerDidFinishPlaying(note: NSNotification){
         print("Video Finished")
-        NotificationCenter.default.post(name: Notification.Name("PlayingFinished"), object: nil)
+        NotificationCenter.default.post(name: Notification.Name("PlayingFinished"), object: nil) // post the notif to the view controller
     }
     
       

@@ -96,7 +96,7 @@ class ViewController: UIViewController {
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
         
-        NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil) // get the notif from video player of video is finished
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
@@ -255,7 +255,7 @@ class ViewController: UIViewController {
         
     }
     
-    @objc func playingFinished() {
+    @objc func playingFinished() { // this is for second half is opening sequentially
         if videoURL == "First Half" {
             var fileUrl = URL(string: self.firstHalfVideoUrl)!
             videoURL = "Second Half"
