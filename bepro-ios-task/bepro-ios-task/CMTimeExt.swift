@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AVFoundation
 
 extension CMTime {
     public var displayTime: String? {
