@@ -31,6 +31,9 @@ class ViewController: UIViewController {
     var contentViewHideBool: Bool = true
     var isPortraitBool: Bool = true
     var isLandscapeBool: Bool = false
+    var portraitHeight: CGFloat = 0
+    var portraitWidth: CGFloat = 0
+    var portraitCenterY: CGFloat = 0
     private let videoPlayer = StreamingVideoPlayer()
     let progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
     private var matchIdTextField = UITextField()
@@ -41,12 +44,24 @@ class ViewController: UIViewController {
     public var pauseButton = UIButton()
     public var tableView: UITableView!
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        UIView.setAnimationsEnabled(false)
+        UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
+        UIView.setAnimationsEnabled(true)
+        self.portraitHeight = self.view.bounds.height
+        self.portraitWidth = self.view.bounds.width
+        self.portraitCenterY = self.view.center.y
+    }
+    
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
             print("landscape")
             isLandscapeBool = true
             isPortraitBool = false
+            hideTableViewBool = true
+            contentViewHideBool = true
             loadView()
         } else if UIDevice.current.orientation.isFlat {
             print("flat")
@@ -54,176 +69,172 @@ class ViewController: UIViewController {
             print("portrait")
             isPortraitBool = true
             isLandscapeBool = false
+            if (self.firstHalfVideoUrl != "") {
+                hideTableViewBool = false
+                contentViewHideBool = false
+            }
             loadView()
         } else if UIDevice.current.orientation.isValidInterfaceOrientation {
             print("is valid interface orientation")
         }
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return [.portrait, .landscape]
+    }
+    
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
         
+        self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
+        matchIdTextField.placeholder = "Enter Match Id Here"
+        matchIdTextField.font = UIFont.systemFont(ofSize: 15)
+        matchIdTextField.text = String(matchId)
+        matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
+        matchIdTextField.keyboardType = UIKeyboardType.default
+        matchIdTextField.returnKeyType = UIReturnKeyType.done
+        matchIdTextField.clearButtonMode = UITextField.ViewMode.whileEditing
+        matchIdTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
+        matchIdTextField.delegate = self
+        matchIdTextField.isHidden = false
+        matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
         if isLandscapeBool {
-            self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
-            matchIdTextField.placeholder = "Enter Match Id Here To Send The Request"
-            matchIdTextField.font = UIFont.systemFont(ofSize: 15)
-            matchIdTextField.text = String(matchId)
-            matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
-            matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
-            matchIdTextField.keyboardType = UIKeyboardType.numberPad
-            matchIdTextField.returnKeyType = UIReturnKeyType.done
-            matchIdTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-            matchIdTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-            matchIdTextField.delegate = self
-            matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(matchIdTextField)
-            
-            NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
-                matchIdTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-                matchIdTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                matchIdTextField.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor),
-                matchIdTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-            ])
-            
-            playerView.translatesAutoresizingMaskIntoConstraints = false
-            playerView.layer.cornerRadius = 20
-            self.view.addSubview(playerView)
-            
-            NSLayoutConstraint.activate([
-                playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 30),
-                playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                playerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-            ])
-            
-            setupVideoPlayer()
-        } else {
-            self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
-            matchIdTextField.placeholder = "Enter Match Id Here"
-            matchIdTextField.font = UIFont.systemFont(ofSize: 15)
-            matchIdTextField.text = String(matchId)
-            matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
-            matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
-            matchIdTextField.keyboardType = UIKeyboardType.default
-            matchIdTextField.returnKeyType = UIReturnKeyType.done
-            matchIdTextField.clearButtonMode = UITextField.ViewMode.whileEditing
-            matchIdTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
-            matchIdTextField.delegate = self
-            matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
-            self.view.addSubview(matchIdTextField)
-            
-            NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
-                matchIdTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
-                matchIdTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
-                matchIdTextField.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor),
-                matchIdTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
-            ])
-            
-            playerView.translatesAutoresizingMaskIntoConstraints = false
-            playerView.layer.cornerRadius = 20
-            self.view.addSubview(playerView)
-            
+            matchIdTextField.isHidden = true
+        }
+        self.view.addSubview(matchIdTextField)
+        
+        NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
+            matchIdTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            matchIdTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            matchIdTextField.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor),
+            matchIdTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
+        
+        playerView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.layer.cornerRadius = 20
+        self.view.addSubview(playerView)
+        
+        if isPortraitBool {
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 30),
                 playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                 playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 186),
                 playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             ])
-            
-            progressView.progressTintColor = .blue
-            progressView.translatesAutoresizingMaskIntoConstraints = false
-            videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
-                let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
-                self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
-            }
-            self.view.addSubview(progressView)
-            
+        } else {
             NSLayoutConstraint.activate([
-                progressView.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
-                progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                progressView.heightAnchor.constraint(equalToConstant: 5),
-                progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                playerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+                playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+                playerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+                playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
             ])
             
-            contentView.translatesAutoresizingMaskIntoConstraints = false
-            contentView.isHidden = contentViewHideBool
-            self.view.addSubview(contentView)
+            videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
+            videoPlayer.playerViewController.modalPresentationStyle = .fullScreen
             
-            NSLayoutConstraint.activate([
-                contentView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 10),
-                contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                contentView.heightAnchor.constraint(equalTo: playerView.heightAnchor),
-                contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
-            ])
-            
-            playButton.translatesAutoresizingMaskIntoConstraints = false
-            playButton.addTarget(self, action: #selector(playTapped), for: .allTouchEvents)
-            playButton.backgroundColor = UIColor.systemBlue
-            playButton.setTitleColor(UIColor.white, for: .normal)
-            playButton.layer.cornerRadius = 15
-            playButton.setTitle("Play", for: .normal)
-            self.contentView.addSubview(playButton)
-            
-            pauseButton.translatesAutoresizingMaskIntoConstraints = false
-            pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
-            pauseButton.backgroundColor = UIColor.white
-            pauseButton.setTitleColor(UIColor.blue, for: .normal)
-            pauseButton.layer.cornerRadius = 15
-            pauseButton.setTitle("Pause", for: .normal)
-            self.contentView.addSubview(pauseButton)
-            
-            NSLayoutConstraint.activate([
-                playButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-                playButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
-                playButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
-                playButton.widthAnchor.constraint(equalToConstant: 140),
-                
-                pauseButton.topAnchor.constraint(equalTo: contentView.topAnchor),
-                pauseButton.heightAnchor.constraint(equalTo: playButton.heightAnchor),
-                pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-                pauseButton.widthAnchor.constraint(equalToConstant: 140)
-            ])
-            
-            
-            let myTableView = UITableView()
-            myTableView.frame = CGRect(x: 0, y: view.center.y + 120, width: self.view.bounds.width, height: self.view.bounds.height - 402)
-            myTableView.translatesAutoresizingMaskIntoConstraints = false
-            myTableView.delegate = self
-            myTableView.dataSource = self
-            myTableView.backgroundColor = .lightGray
-            myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-            myTableView.allowsSelection = true
-            myTableView.allowsMultipleSelection = false
-            myTableView.isHidden = hideTableViewBool
-            self.tableView = myTableView
-            self.view.addSubview(self.tableView)
-            
-            self.tableView.reloadData()
-            
-            if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
-                let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
-                let blurEffectView = UIVisualEffectView(effect: blurEffect)
-                blurEffectView.frame = view.bounds
-                blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-                view.addSubview(blurEffectView)
-                
-                activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-                activityIndicator.startAnimating()
-                activityIndicator.color = UIColor.white
-                activityIndicator.style = .large
-                self.view.addSubview(activityIndicator)
-                self.view.bringSubviewToFront(activityIndicator)
-                
-                NSLayoutConstraint.activate([
-                    activityIndicator.widthAnchor.constraint(equalToConstant: 50),
-                    activityIndicator.heightAnchor.constraint(equalToConstant: 50),
-                    activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-                    activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-                ])
-            }
-            
-            setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         }
+        
+        progressView.progressTintColor = .blue
+        progressView.isHidden = false
+        progressView.translatesAutoresizingMaskIntoConstraints = false
+        if isLandscapeBool {
+            progressView.isHidden = true
+        }
+        videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
+            let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
+            self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
+        }
+        self.view.addSubview(progressView)
+        
+        NSLayoutConstraint.activate([
+            progressView.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 30),
+            progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            progressView.heightAnchor.constraint(equalToConstant: 5),
+            progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.isHidden = contentViewHideBool
+        if isLandscapeBool {
+            contentView.isHidden = true
+        }
+        self.view.addSubview(contentView)
+        
+        NSLayoutConstraint.activate([
+            contentView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 10),
+            contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            contentView.heightAnchor.constraint(equalTo: playerView.heightAnchor),
+            contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+        ])
+        
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        playButton.addTarget(self, action: #selector(playTapped), for: .allTouchEvents)
+        playButton.backgroundColor = UIColor.systemBlue
+        playButton.setTitleColor(UIColor.white, for: .normal)
+        playButton.layer.cornerRadius = 15
+        playButton.setTitle("Play", for: .normal)
+        self.contentView.addSubview(playButton)
+        
+        pauseButton.translatesAutoresizingMaskIntoConstraints = false
+        pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
+        pauseButton.backgroundColor = UIColor.white
+        pauseButton.setTitleColor(UIColor.blue, for: .normal)
+        pauseButton.layer.cornerRadius = 15
+        pauseButton.setTitle("Pause", for: .normal)
+        self.contentView.addSubview(pauseButton)
+        
+        NSLayoutConstraint.activate([
+            playButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            playButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
+            playButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
+            playButton.widthAnchor.constraint(equalToConstant: 140),
+            
+            pauseButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            pauseButton.heightAnchor.constraint(equalTo: playButton.heightAnchor),
+            pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+            pauseButton.widthAnchor.constraint(equalToConstant: 140)
+        ])
+        
+        
+        let myTableView = UITableView()
+        myTableView.frame = CGRect(x: 0, y: self.portraitCenterY + 120, width: self.portraitWidth, height: self.portraitHeight - 402)
+        myTableView.translatesAutoresizingMaskIntoConstraints = false
+        myTableView.delegate = self
+        myTableView.dataSource = self
+        myTableView.backgroundColor = .lightGray
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.allowsSelection = true
+        myTableView.allowsMultipleSelection = false
+        myTableView.isHidden = hideTableViewBool
+        self.tableView = myTableView
+        self.view.addSubview(self.tableView)
+        
+        self.tableView.reloadData()
+        
+        if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
+            let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
+            let blurEffectView = UIVisualEffectView(effect: blurEffect)
+            blurEffectView.frame = view.bounds
+            blurEffectView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            view.addSubview(blurEffectView)
+            
+            activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+            activityIndicator.startAnimating()
+            activityIndicator.color = UIColor.white
+            activityIndicator.style = .large
+            self.view.addSubview(activityIndicator)
+            self.view.bringSubviewToFront(activityIndicator)
+            
+            NSLayoutConstraint.activate([
+                activityIndicator.widthAnchor.constraint(equalToConstant: 50),
+                activityIndicator.heightAnchor.constraint(equalToConstant: 50),
+                activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+                activityIndicator.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            ])
+        }
+        
+        setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
     }
     
