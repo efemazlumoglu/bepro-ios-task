@@ -23,29 +23,36 @@ class ViewController: UIViewController {
     var secondHalfData: Datum?
     var firstHalfVideo: Video?
     var secondHalfVideo: Video?
+    
     var firstHalfVideoTitle: String = ""
     var secondHalfVideoTitle: String = ""
     var videoURL: String = ""
+    
     var listOfOptions: [String] = ["First Half", "Second Half"]
+    
     var hideTableViewBool: Bool = true
     var contentViewHideBool: Bool = true
     var progressBarHideBool: Bool = true
     var isPortraitBool: Bool = true
     var isLandscapeBool: Bool = false
+    
+    
     var portraitHeight: CGFloat = 0
     var portraitWidth: CGFloat = 0
     var portraitCenterY: CGFloat = 0
-    private let videoPlayer = StreamingVideoPlayer()
+    
+    
     var totalTime = UILabel()
     var currentTime = UILabel()
-    let progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
-    private var matchIdTextField = UITextField()
-    public var activityIndicator = UIActivityIndicatorView()
-    public var playerView = UIView()
-    public var contentView = UIView()
-    public var playButton = UIButton()
-    public var pauseButton = UIButton()
-    public var tableView: UITableView!
+    var activityIndicator = UIActivityIndicatorView()
+    var playerView = UIView()
+    var contentView = UIView()
+    var playButton = UIButton()
+    var pauseButton = UIButton()
+    var tableView: UITableView!
+    var matchIdTextField = UITextField()
+    var progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
+    private let videoPlayer = StreamingVideoPlayer()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -60,7 +67,6 @@ class ViewController: UIViewController {
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
-            print("landscape")
             isLandscapeBool = true
             isPortraitBool = false
             hideTableViewBool = true
@@ -70,7 +76,6 @@ class ViewController: UIViewController {
         } else if UIDevice.current.orientation.isFlat {
             print("flat")
         } else if UIDevice.current.orientation.isPortrait {
-            print("portrait")
             isPortraitBool = true
             isLandscapeBool = false
             if (self.firstHalfVideoUrl != "") {
@@ -80,7 +85,7 @@ class ViewController: UIViewController {
             }
             loadView()
         } else if UIDevice.current.orientation.isValidInterfaceOrientation {
-            print("is valid interface orientation")
+            //
         }
     }
     
@@ -104,9 +109,6 @@ class ViewController: UIViewController {
         matchIdTextField.delegate = self
         matchIdTextField.isHidden = false
         matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
-        if isLandscapeBool {
-            matchIdTextField.isHidden = true
-        }
         self.view.addSubview(matchIdTextField)
         
         NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
@@ -248,10 +250,6 @@ class ViewController: UIViewController {
         
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
-    }
-    
-    @objc func dismissKeyboard() {
-        self.matchIdTextField.resignFirstResponder()
     }
     
     @objc func playTapped() {
