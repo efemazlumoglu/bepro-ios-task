@@ -8,7 +8,7 @@
 import Foundation
 import AVFoundation
 
-extension CMTime {
+extension CMTime { // this extension is for view controller variable called total time and current time cause videoPlayer.playerController...duration and currentTime is returning CMTime values i need to convert them into the string for showing them.
     public var displayTime: String? {
         guard let sec = seconds?.rounded() else { return nil }
 
