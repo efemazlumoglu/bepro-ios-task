@@ -45,7 +45,7 @@ public class StreamingVideoPlayer {
         playerViewController.player?.play()
     }
     
-    public func playPause() {
+    public func playPause() { // this method is for playing where you have left in the video
         avPlayer.seek(to: CMTime(seconds: Double(self.currentSeconds), preferredTimescale: .max))
         avPlayer.play()
     }
@@ -54,7 +54,7 @@ public class StreamingVideoPlayer {
         avPlayer.pause()
         self.t1 = Float(avPlayer.currentTime().value)
         self.t2 = Float(avPlayer.currentTime().timescale)
-        self.currentSeconds = t1 / t2
+        self.currentSeconds = t1 / t2 // to get the currentSeconds cause i need to seek that time when you play it again
     }
     
       
