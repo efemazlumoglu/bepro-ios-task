@@ -169,11 +169,11 @@ class ViewController: UIViewController {
                 backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-                backButton.widthAnchor.constraint(equalToConstant: 100),
+                backButton.widthAnchor.constraint(equalToConstant: 120),
                 nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-                nextButton.widthAnchor.constraint(equalToConstant: 100)
+                nextButton.widthAnchor.constraint(equalToConstant: 120)
             ])
             
             videoPlayer.playerViewController.showsPlaybackControls = false
@@ -186,11 +186,11 @@ class ViewController: UIViewController {
                 backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-                backButton.widthAnchor.constraint(equalToConstant: 120),
+                backButton.widthAnchor.constraint(equalToConstant: 150),
                 nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-                nextButton.widthAnchor.constraint(equalToConstant: 120)
+                nextButton.widthAnchor.constraint(equalToConstant: 150)
             ])
             
             videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
@@ -214,9 +214,9 @@ class ViewController: UIViewController {
                 self.totalTime.text = duration.displayTime // for displayTime please look for the CMTimeExt extension
                 self.currentTime.text = self.videoPlayer.avPlayer.currentItem?.currentTime().displayTime
                 
-                let seconds = CMTimeGetSeconds(time)
-                let durationSeconds = CMTimeGetSeconds(duration)
-                self.progressView.value = Float(seconds / durationSeconds)
+                let seconds = CMTimeGetSeconds(time) // get seconds from time
+                let durationSeconds = CMTimeGetSeconds(duration) // get the duration seconds
+                self.progressView.value = Float(seconds / durationSeconds) // slider value is between 0 - 1 so this calc is necessary
             }
         }
         
