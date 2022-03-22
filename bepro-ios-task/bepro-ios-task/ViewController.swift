@@ -35,6 +35,7 @@ class ViewController: UIViewController {
     var progressBarHideBool: Bool = true
     var isPortraitBool: Bool = true
     var isLandscapeBool: Bool = false
+    var playerViewHideBool: Bool = true
     
     
     var portraitHeight: CGFloat = 0
@@ -72,6 +73,7 @@ class ViewController: UIViewController {
             isPortraitBool = false
             hideTableViewBool = true
             contentViewHideBool = true
+            playerViewHideBool = true
             progressBarHideBool = true
             loadView()
         } else if UIDevice.current.orientation.isFlat {
@@ -82,6 +84,7 @@ class ViewController: UIViewController {
             if (self.firstHalfVideoUrl != "") {
                 hideTableViewBool = false
                 contentViewHideBool = false
+                playerViewHideBool = false
                 progressBarHideBool = false
             }
             loadView()
@@ -103,6 +106,7 @@ class ViewController: UIViewController {
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
         matchIdTextField.text = String(matchId)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
+        matchIdTextField.layer.borderWidth = 1
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
         matchIdTextField.keyboardType = UIKeyboardType.default
         matchIdTextField.returnKeyType = UIReturnKeyType.done
@@ -121,6 +125,7 @@ class ViewController: UIViewController {
         ])
         
         playerView.translatesAutoresizingMaskIntoConstraints = false
+        playerView.isHidden = playerViewHideBool
         playerView.layer.cornerRadius = 20
         self.view.addSubview(playerView)
         
@@ -150,7 +155,6 @@ class ViewController: UIViewController {
         progressView.isHidden = progressBarHideBool
         progressView.backgroundColor = .systemGray3
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.layer.cornerRadius = 20
         videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
             let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
             self.totalTime.text = self.videoPlayer.avPlayer.currentItem!.duration.displayTime
@@ -193,7 +197,7 @@ class ViewController: UIViewController {
         
         toogleFullScreenButton.translatesAutoresizingMaskIntoConstraints = false
         toogleFullScreenButton.addTarget(self, action: #selector(openFullScreen), for: .allTouchEvents)
-        toogleFullScreenButton.backgroundColor = .systemMint
+        toogleFullScreenButton.backgroundColor = .systemGreen
         toogleFullScreenButton.setTitleColor(.white, for: .normal)
         toogleFullScreenButton.layer.cornerRadius = 15
         toogleFullScreenButton.setTitle("Full", for: .normal)
@@ -201,8 +205,8 @@ class ViewController: UIViewController {
         
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
-        pauseButton.backgroundColor = UIColor.white
-        pauseButton.setTitleColor(UIColor.blue, for: .normal)
+        pauseButton.backgroundColor = UIColor.systemOrange
+        pauseButton.setTitleColor(UIColor.white, for: .normal)
         pauseButton.layer.cornerRadius = 15
         pauseButton.setTitle("Pause", for: .normal)
         self.contentView.addSubview(pauseButton)
@@ -231,7 +235,7 @@ class ViewController: UIViewController {
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
-        myTableView.backgroundColor = .systemOrange
+        myTableView.backgroundColor = .white
         myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         myTableView.allowsSelection = true
         myTableView.allowsMultipleSelection = false
@@ -359,6 +363,7 @@ class ViewController: UIViewController {
                         self.activityIndicator.stopAnimating()
                         self.hideTableViewBool = false
                         self.contentViewHideBool = false
+                        self.playerViewHideBool = false
                         self.progressBarHideBool = false
                         self.loadView()
                         self.tableView.reloadData()
@@ -393,6 +398,7 @@ extension ViewController: UITextFieldDelegate {
             activityIndicator.isHidden = false
             hideTableViewBool = true
             contentViewHideBool = true
+            playerViewHideBool = true
             progressBarHideBool = true
             activityIndicator.startAnimating()
             loadView()
@@ -412,7 +418,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let data = self.listOfOptions[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        cell.backgroundColor = UIColor.systemOrange
+        cell.backgroundColor = UIColor.white
         cell.selectionStyle = .none
         var config = cell.defaultContentConfiguration() // when you are using default table view cell you have to use config cause textLabel etc is deprecated.
         if (data == "First Half") {

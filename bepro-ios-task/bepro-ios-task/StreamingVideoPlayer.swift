@@ -17,7 +17,7 @@ public class StreamingVideoPlayer {
     
     public lazy var playerView: UIView = {
         let view = playerViewController.view!
-//        playerViewController.showsPlaybackControls = false   // i add this line for removing the playback controls of the videoPlayer it self then i added again cause adjust time is needed.
+        playerViewController.showsPlaybackControls = false   // i add this line for removing the playback controls of the videoPlayer it self
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
