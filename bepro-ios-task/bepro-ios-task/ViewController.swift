@@ -413,12 +413,17 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         let data = self.listOfOptions[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         cell.backgroundColor = UIColor.systemOrange
-        cell.selectionStyle = .blue
-        var config = cell.defaultContentConfiguration()
+        cell.selectionStyle = .none
+        var config = cell.defaultContentConfiguration() // when you are using default table view cell you have to use config cause textLabel etc is deprecated.
         if (data == "First Half") {
             config.text = self.firstHalfVideoTitle
         } else {
             config.text = self.secondHalfVideoTitle
+        }
+        if data == videoURL { // double check for you cannot click on the first half video title if you are already in the first half
+            cell.isUserInteractionEnabled = false
+        } else {
+            cell.isUserInteractionEnabled = true
         }
         cell.contentConfiguration = config
         return cell
@@ -426,13 +431,10 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.listOfOptions[indexPath.row]
-        playButton.isUserInteractionEnabled = false
-        pauseButton.isUserInteractionEnabled = true
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        if videoURL != data {
+        if videoURL != data { //you cannot click on the first half video title if you are already in the first half
             self.callHalfs(halfOption: data)
         }
+        self.tableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
