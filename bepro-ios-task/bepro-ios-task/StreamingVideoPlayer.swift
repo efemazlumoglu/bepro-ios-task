@@ -21,10 +21,6 @@ public class StreamingVideoPlayer {
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-
-    var t1: Float = 0.0
-    var t2: Float = 0.0
-    var currentSeconds: Float = 0.0
     
     public init() {}
     
@@ -47,16 +43,13 @@ public class StreamingVideoPlayer {
         NotificationCenter.default.addObserver(self, selector: #selector(playerDidFinishPlaying), name: .AVPlayerItemDidPlayToEndTime, object: nil) // did play to end time notification observer
     }
     
-    public func playPause() { // this method is for playing where you have left in the video
-        avPlayer.seek(to: CMTime(seconds: Double(self.currentSeconds), preferredTimescale: .max))
+    public func playPause(cmTime: CMTime) { // this method is for playing where you have left in the video
+        avPlayer.seek(to: cmTime)
         avPlayer.play()
     }
     
     public func pause() {
         avPlayer.pause()
-        self.t1 = Float(avPlayer.currentTime().value)
-        self.t2 = Float(avPlayer.currentTime().timescale)
-        self.currentSeconds = t1 / t2 // to get the currentSeconds cause i need to seek that time when you play it again
     }
     
     @objc func playerDidFinishPlaying(note: NSNotification){

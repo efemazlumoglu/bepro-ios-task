@@ -351,7 +351,10 @@ class ViewController: UIViewController {
         } else {
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
-            self.videoPlayer.playPause() // this method is for paused player to seek the where it is left in the video player as seconds.
+            let t1 = Float(videoPlayer.avPlayer.currentTime().value)
+            let t2 = Float(videoPlayer.avPlayer.currentTime().timescale)
+            let currentSeconds = t1 / t2
+            self.videoPlayer.playPause(cmTime: CMTime(seconds: Double(currentSeconds), preferredTimescale: .max)) // this method is for paused player to seek the where it is left in the video player as seconds.
         }
     }
     
