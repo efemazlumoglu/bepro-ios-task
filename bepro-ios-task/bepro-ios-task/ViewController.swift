@@ -56,7 +56,7 @@ class ViewController: UIViewController {
     var backButton = UIButton()
     var tableView: UITableView!
     var matchIdTextField = UITextField()
-    var progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
+    var progressView = UISlider()
     private let videoPlayer = StreamingVideoPlayer()
     
     //MARK: ViewDidAppear
@@ -202,17 +202,24 @@ class ViewController: UIViewController {
         totalTime.translatesAutoresizingMaskIntoConstraints = false
         currentTime.translatesAutoresizingMaskIntoConstraints = false
         
-        progressView.progressTintColor = .systemBlue
+        progressView.tintColor = .systemBlue
         progressView.isHidden = progressBarHideBool
+        progressView.isContinuous = true
+        progressView.addTarget(self, action: #selector(progressViewChanged), for: .valueChanged)
         progressView.backgroundColor = .systemGray3
         progressView.translatesAutoresizingMaskIntoConstraints = false
         // addPeriodicTimeObserver helps us to get current time of the videplayer and also the total time. For creating progress view.
         videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
-            let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
-            self.totalTime.text = self.videoPlayer.avPlayer.currentItem!.duration.displayTime // for displayTime please look for the CMTimeExt extension
-            self.currentTime.text = self.videoPlayer.avPlayer.currentItem?.currentTime().displayTime
-            self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
+            if let duration = self.videoPlayer.avPlayer.currentItem?.duration {
+                self.totalTime.text = duration.displayTime // for displayTime please look for the CMTimeExt extension
+                self.currentTime.text = self.videoPlayer.avPlayer.currentItem?.currentTime().displayTime
+                
+                let seconds = CMTimeGetSeconds(time)
+                let durationSeconds = CMTimeGetSeconds(duration)
+                self.progressView.value = Float(seconds / durationSeconds)
+            }
         }
+        
         self.view.addSubview(totalTime)
         self.view.addSubview(currentTime)
         self.view.addSubview(progressView)
@@ -222,7 +229,7 @@ class ViewController: UIViewController {
             currentTime.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             totalTime.topAnchor.constraint(equalTo: playerView.bottomAnchor, constant: 5),
             totalTime.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            progressView.topAnchor.constraint(equalTo: currentTime.bottomAnchor, constant: 5),
+            progressView.topAnchor.constraint(equalTo: currentTime.bottomAnchor, constant: 15),
             progressView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             progressView.heightAnchor.constraint(equalToConstant: 5),
             progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
@@ -234,7 +241,7 @@ class ViewController: UIViewController {
         self.view.addSubview(contentView)
         
         NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 10),
+            contentView.topAnchor.constraint(equalTo: progressView.bottomAnchor, constant: 15),
             contentView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             contentView.heightAnchor.constraint(equalTo: playerView.heightAnchor),
             contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
@@ -336,6 +343,22 @@ class ViewController: UIViewController {
             videoURL = "Second Half"
             fileUrl = URL(string: self.secondHalfVideoUrl)!
             self.videoPlayer.play(url: fileUrl)
+        }
+    }
+    
+    //MARK: Progress View Changed
+    @objc func progressViewChanged() {
+        
+        if let duration = videoPlayer.avPlayer.currentItem?.duration {
+            
+            let totalSeconds = CMTimeGetSeconds(duration)
+            let value = Float64(self.progressView.value) * totalSeconds
+            let seekTime = CMTime(value: Int64(value), timescale: 1)
+            
+            videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
+                completed in
+                //
+            })
         }
     }
     
@@ -455,6 +478,7 @@ class ViewController: UIViewController {
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
             }
             self.videoPlayer.play(url: fileUrl)
+            self.progressView.value = 0
             self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
             self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
         }
