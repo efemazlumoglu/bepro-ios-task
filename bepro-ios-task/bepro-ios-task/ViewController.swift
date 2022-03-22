@@ -376,7 +376,7 @@ class ViewController: UIViewController {
     
     //MARK: Next Tapped Function
     @objc func nextTapped() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) { // animation for next button changes
             self.nextButton.setTitle(">>>", for: .normal)
             self.nextButton.backgroundColor = .systemGray2.withAlphaComponent(0.5)
             self.nextButton.setTitleColor(.systemRed, for: .normal)
@@ -392,7 +392,7 @@ class ViewController: UIViewController {
 
             let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
             videoPlayer.avPlayer.seek(to: time2)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { // that is used cause the screen show at least 1 second more.
                 UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
                     self.nextButton.setTitle("", for: .normal)
                     self.nextButton.backgroundColor = .white.withAlphaComponent(0)
@@ -411,7 +411,7 @@ class ViewController: UIViewController {
     
     //MARK: Back Tapped Function
     @objc func backTapped() {
-        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) { // animation for back button changes
             self.backButton.setTitle("<<<", for: .normal)
             self.backButton.setTitleColor(.systemRed, for: .normal)
             self.backButton.backgroundColor = .systemGray2.withAlphaComponent(0.5)
@@ -425,7 +425,7 @@ class ViewController: UIViewController {
         }
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         videoPlayer.avPlayer.seek(to: time2)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) { // that is used cause the screen show at least 1 second more.
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
                 self.backButton.setTitle("", for: .normal)
                 self.backButton.backgroundColor = .white.withAlphaComponent(0)
