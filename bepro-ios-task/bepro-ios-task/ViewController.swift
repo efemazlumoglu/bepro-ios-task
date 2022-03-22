@@ -75,7 +75,7 @@ class ViewController: UIViewController {
             isPortraitBool = false
             hideTableViewBool = true
             contentViewHideBool = true
-            playerViewHideBool = true
+            playerViewHideBool = false
             progressBarHideBool = true
             loadView()
         } else if UIDevice.current.orientation.isPortrait {
@@ -110,12 +110,11 @@ class ViewController: UIViewController {
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
         matchIdTextField.layer.borderWidth = 1
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
-        matchIdTextField.keyboardType = UIKeyboardType.default
+        matchIdTextField.keyboardType = UIKeyboardType.numbersAndPunctuation
         matchIdTextField.returnKeyType = UIReturnKeyType.done
         matchIdTextField.clearButtonMode = UITextField.ViewMode.whileEditing
         matchIdTextField.contentVerticalAlignment = UIControl.ContentVerticalAlignment.center
         matchIdTextField.delegate = self
-        matchIdTextField.isHidden = false
         matchIdTextField.translatesAutoresizingMaskIntoConstraints = false
         self.view.addSubview(matchIdTextField)
         
@@ -132,7 +131,7 @@ class ViewController: UIViewController {
         playerView.layer.cornerRadius = 20
         self.view.addSubview(playerView)
         
-        if isPortraitBool { // this condition is for check if it is portrait or not
+        if isPortraitBool { // this condition is for check if it is portrait or not and give constraints for related orientation
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 10),
                 playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
