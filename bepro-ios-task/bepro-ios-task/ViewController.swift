@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     var portraitHeight: CGFloat = 0
     var portraitWidth: CGFloat = 0
     var portraitCenterY: CGFloat = 0
-    
+    let seekDuration: Float64 = 5
     
     var totalTime = UILabel()
     var currentTime = UILabel()
@@ -51,6 +51,8 @@ class ViewController: UIViewController {
     var toogleFullScreenButton = UIButton()
     var playButton = UIButton()
     var pauseButton = UIButton()
+    var nextButton = UIButton()
+    var backButton = UIButton()
     var tableView: UITableView!
     var matchIdTextField = UITextField()
     var progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
@@ -131,19 +133,46 @@ class ViewController: UIViewController {
         playerView.layer.cornerRadius = 20
         self.view.addSubview(playerView)
         
+        //MARK: Next and Back Buttons
+        nextButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        nextButton.backgroundColor = .white.withAlphaComponent(0)
+        backButton.backgroundColor = .white.withAlphaComponent(0)
+        nextButton.addTarget(self, action: #selector(nextTapped), for: .allTouchEvents)
+        backButton.addTarget(self, action: #selector(backTapped), for: .allTouchEvents)
+        
+        self.view.addSubview(nextButton)
+        self.view.addSubview(backButton)
+        
         if isPortraitBool { // this condition is for check if it is portrait or not and give constraints for related orientation
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 10),
                 playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
                 playerView.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 206),
-                playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+                backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
+                backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+                backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
+                backButton.widthAnchor.constraint(equalToConstant: 60),
+                nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
+                nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+                nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
+                nextButton.widthAnchor.constraint(equalToConstant: 60)
             ])
         } else {
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: view.topAnchor),
                 playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
                 playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-                playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
+                playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+                backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
+                backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+                backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
+                backButton.widthAnchor.constraint(equalToConstant: 80),
+                nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
+                nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
+                nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
+                nextButton.widthAnchor.constraint(equalToConstant: 80)
             ])
             
             videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
@@ -318,6 +347,33 @@ class ViewController: UIViewController {
         UIView.setAnimationsEnabled(false)
         UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
         UIView.setAnimationsEnabled(true)
+    }
+    
+    //MARK: Next Tapped Function
+    @objc func nextTapped() {
+        guard let duration  = videoPlayer.avPlayer.currentItem?.duration else {
+            return
+        }
+        let playerCurrentTime = CMTimeGetSeconds(videoPlayer.avPlayer.currentTime())
+        let newTime = playerCurrentTime + seekDuration
+
+        if newTime < CMTimeGetSeconds(duration) {
+
+            let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
+            videoPlayer.avPlayer.seek(to: time2)
+        }
+    }
+    
+    //MARK: Back Tapped Function
+    @objc func backTapped() {
+        let playerCurrentTime = CMTimeGetSeconds(videoPlayer.avPlayer.currentTime())
+        var newTime = playerCurrentTime - seekDuration
+
+        if newTime < 0 {
+            newTime = 0
+        }
+        let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
+        videoPlayer.avPlayer.seek(to: time2)
     }
     
     // MARK: Call Halfs Method
