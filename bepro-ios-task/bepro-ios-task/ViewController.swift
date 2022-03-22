@@ -43,6 +43,7 @@ class ViewController: UIViewController {
     var portraitCenterY: CGFloat = 0
     let seekDuration: Float64 = 5
     
+    var infoLabel = UILabel()
     var totalTime = UILabel()
     var currentTime = UILabel()
     var activityIndicator = UIActivityIndicatorView()
@@ -104,6 +105,21 @@ class ViewController: UIViewController {
         //MARK: Notification Center Observer
         NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil) // get the notif from video player of video is finished
         
+        //MARK: Info Label
+        infoLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoLabel.text = "Please enter the match id into the below text field. And from keyboard please click 'Done' to get match video."
+        infoLabel.font = .boldSystemFont(ofSize: 15)
+        infoLabel.numberOfLines = 3
+        infoLabel.frame.size.height = 50
+        self.view.addSubview(infoLabel)
+        
+        NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
+            infoLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            infoLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
+            infoLabel.heightAnchor.constraint(equalTo: infoLabel.heightAnchor),
+            infoLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
+        ])
+        
         //MARK: MatchIdTextField
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
@@ -121,7 +137,7 @@ class ViewController: UIViewController {
         self.view.addSubview(matchIdTextField)
         
         NSLayoutConstraint.activate([ // this layout constraint is used for constraints for the elements of view
-            matchIdTextField.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
+            matchIdTextField.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 10),
             matchIdTextField.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             matchIdTextField.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor),
             matchIdTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
@@ -322,6 +338,7 @@ class ViewController: UIViewController {
     
     //MARK: Play Tapped selector
     @objc func playTapped() {
+        self.matchIdTextField.resignFirstResponder()
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
@@ -337,6 +354,7 @@ class ViewController: UIViewController {
     
     //MARK: PauseTapped Selector
     @objc func pauseTapped() {
+        self.matchIdTextField.resignFirstResponder()
         videoPlayer.pause()
         playButton.isUserInteractionEnabled = true
         pauseButton.isUserInteractionEnabled = false
@@ -344,6 +362,7 @@ class ViewController: UIViewController {
     
     //MARK: Open Full Screen Selector
     @objc func openFullScreen() { // for opening in full screen mode i changed the interface orientation to landscape cause i did this functionality for that
+        self.matchIdTextField.resignFirstResponder()
         UIView.setAnimationsEnabled(false)
         UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
         UIView.setAnimationsEnabled(true)
@@ -351,6 +370,7 @@ class ViewController: UIViewController {
     
     //MARK: Next Tapped Function
     @objc func nextTapped() {
+        self.matchIdTextField.resignFirstResponder()
         guard let duration  = videoPlayer.avPlayer.currentItem?.duration else {
             return
         }
@@ -373,6 +393,7 @@ class ViewController: UIViewController {
     
     //MARK: Back Tapped Function
     @objc func backTapped() {
+        self.matchIdTextField.resignFirstResponder()
         let playerCurrentTime = CMTimeGetSeconds(videoPlayer.avPlayer.currentTime())
         var newTime = playerCurrentTime - seekDuration
 
