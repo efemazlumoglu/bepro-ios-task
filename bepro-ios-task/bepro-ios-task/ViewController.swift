@@ -243,7 +243,7 @@ class ViewController: UIViewController {
         // MARK: PlayButton
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.addTarget(self, action: #selector(playTapped), for: .allTouchEvents)
-        playButton.backgroundColor = UIColor.systemBlue
+        playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
         playButton.setTitleColor(UIColor.white, for: .normal)
         playButton.layer.cornerRadius = 15
         playButton.setTitle("Play", for: .normal)
@@ -345,10 +345,14 @@ class ViewController: UIViewController {
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
+            self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
+            self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
             activityIndicator.isHidden = false
             activityIndicator.startAnimating()
             loadView() // i called this method to re render the view
         } else {
+            self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
+            self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
             let t1 = Float(videoPlayer.avPlayer.currentTime().value)
@@ -362,6 +366,8 @@ class ViewController: UIViewController {
     @objc func pauseTapped() {
         self.matchIdTextField.resignFirstResponder()
         videoPlayer.pause()
+        self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(1)
+        self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(0.4)
         playButton.isUserInteractionEnabled = true
         pauseButton.isUserInteractionEnabled = false
     }
@@ -449,6 +455,8 @@ class ViewController: UIViewController {
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
             }
             self.videoPlayer.play(url: fileUrl)
+            self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
+            self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)
         }
     }
     
