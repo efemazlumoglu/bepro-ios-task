@@ -175,6 +175,8 @@ class ViewController: UIViewController {
                 nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
                 nextButton.widthAnchor.constraint(equalToConstant: 60)
             ])
+            
+            videoPlayer.playerViewController.showsPlaybackControls = false
         } else {
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -192,6 +194,7 @@ class ViewController: UIViewController {
             ])
             
             videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
+            videoPlayer.playerViewController.showsPlaybackControls = true
             videoPlayer.playerViewController.modalPresentationStyle = .fullScreen
         }
         
