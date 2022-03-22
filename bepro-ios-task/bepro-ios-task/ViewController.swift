@@ -428,7 +428,7 @@ class ViewController: UIViewController {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
             UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
                 self.backButton.setTitle("", for: .normal)
-                self.nextButton.backgroundColor = .white.withAlphaComponent(0)
+                self.backButton.backgroundColor = .white.withAlphaComponent(0)
             }
         }
     }
