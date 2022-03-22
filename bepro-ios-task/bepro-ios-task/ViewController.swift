@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     var progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
     private let videoPlayer = StreamingVideoPlayer()
     
-    override func viewDidAppear(_ animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) { // this for at the launch it will always open at portrait mode
         super.viewDidAppear(animated)
         UIView.setAnimationsEnabled(false)
         UIDevice.current.setValue(UIInterfaceOrientation.portrait.rawValue, forKey: "orientation")
@@ -65,7 +65,7 @@ class ViewController: UIViewController {
         self.portraitCenterY = self.view.center.y
     }
     
-    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) { // to detect of the interface orientation of screen
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
             isLandscapeBool = true
@@ -124,7 +124,7 @@ class ViewController: UIViewController {
         playerView.layer.cornerRadius = 20
         self.view.addSubview(playerView)
         
-        if isPortraitBool {
+        if isPortraitBool { // this condition is for check if it is portrait or not
             NSLayoutConstraint.activate([
                 playerView.topAnchor.constraint(equalTo: matchIdTextField.bottomAnchor, constant: 10),
                 playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
@@ -172,8 +172,6 @@ class ViewController: UIViewController {
             progressView.heightAnchor.constraint(equalToConstant: 5),
             progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
-        
-        
         
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.isHidden = contentViewHideBool
@@ -299,7 +297,7 @@ class ViewController: UIViewController {
         pauseButton.isUserInteractionEnabled = false
     }
     
-    @objc func openFullScreen() {
+    @objc func openFullScreen() { // for opening in full screen mode i changed the interface orientation to landscape cause i did this functionality for that
         UIView.setAnimationsEnabled(false)
         UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
         UIView.setAnimationsEnabled(true)
