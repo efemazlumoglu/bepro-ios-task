@@ -47,6 +47,7 @@ class ViewController: UIViewController {
     var activityIndicator = UIActivityIndicatorView()
     var playerView = UIView()
     var contentView = UIView()
+    var toogleFullScreenButton = UIButton()
     var playButton = UIButton()
     var pauseButton = UIButton()
     var tableView: UITableView!
@@ -193,6 +194,14 @@ class ViewController: UIViewController {
         playButton.setTitle("Play", for: .normal)
         self.contentView.addSubview(playButton)
         
+        toogleFullScreenButton.translatesAutoresizingMaskIntoConstraints = false
+        toogleFullScreenButton.addTarget(self, action: #selector(openFullScreen), for: .allTouchEvents)
+        toogleFullScreenButton.backgroundColor = .systemMint
+        toogleFullScreenButton.setTitleColor(.white, for: .normal)
+        toogleFullScreenButton.layer.cornerRadius = 15
+        toogleFullScreenButton.setTitle("Full", for: .normal)
+        self.contentView.addSubview(toogleFullScreenButton)
+        
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
         pauseButton.backgroundColor = UIColor.white
@@ -207,10 +216,16 @@ class ViewController: UIViewController {
             playButton.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10),
             playButton.widthAnchor.constraint(equalToConstant: 140),
             
+            toogleFullScreenButton.topAnchor.constraint(equalTo: contentView.topAnchor),
+            toogleFullScreenButton.heightAnchor.constraint(equalTo: matchIdTextField.heightAnchor, constant: 10),
+            toogleFullScreenButton.leadingAnchor.constraint(equalTo: playButton.trailingAnchor, constant: 10),
+            
             pauseButton.topAnchor.constraint(equalTo: contentView.topAnchor),
             pauseButton.heightAnchor.constraint(equalTo: playButton.heightAnchor),
             pauseButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
-            pauseButton.widthAnchor.constraint(equalToConstant: 140)
+            pauseButton.widthAnchor.constraint(equalToConstant: 140),
+            
+            toogleFullScreenButton.trailingAnchor.constraint(equalTo: pauseButton.leadingAnchor, constant: -10),
         ])
         
         
@@ -282,6 +297,12 @@ class ViewController: UIViewController {
         videoPlayer.pause()
         playButton.isUserInteractionEnabled = true
         pauseButton.isUserInteractionEnabled = false
+    }
+    
+    @objc func openFullScreen() {
+        UIView.setAnimationsEnabled(false)
+        UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
+        UIView.setAnimationsEnabled(true)
     }
     
     func callHalfs(halfOption: String) {
