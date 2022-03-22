@@ -78,8 +78,6 @@ class ViewController: UIViewController {
             playerViewHideBool = true
             progressBarHideBool = true
             loadView()
-        } else if UIDevice.current.orientation.isFlat {
-            print("flat")
         } else if UIDevice.current.orientation.isPortrait {
             isPortraitBool = true
             isLandscapeBool = false
@@ -90,8 +88,6 @@ class ViewController: UIViewController {
                 progressBarHideBool = false
             }
             loadView()
-        } else if UIDevice.current.orientation.isValidInterfaceOrientation {
-            //
         }
     }
     
