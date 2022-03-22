@@ -361,6 +361,13 @@ class ViewController: UIViewController {
 
             let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
             videoPlayer.avPlayer.seek(to: time2)
+        } else {
+            if (videoURL != "Second Half") {
+                var fileUrl = URL(string: self.firstHalfVideoUrl)!
+                videoURL = "Second Half"
+                fileUrl = URL(string: self.secondHalfVideoUrl)!
+                self.videoPlayer.play(url: fileUrl)
+            }
         }
     }
     
