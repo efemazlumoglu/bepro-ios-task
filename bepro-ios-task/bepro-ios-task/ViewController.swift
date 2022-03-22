@@ -43,20 +43,20 @@ class ViewController: UIViewController {
     var portraitCenterY: CGFloat = 0
     let seekDuration: Float64 = 5
     
-    var infoLabel = UILabel()
-    var totalTime = UILabel()
-    var currentTime = UILabel()
-    var activityIndicator = UIActivityIndicatorView()
-    var playerView = UIView()
-    var contentView = UIView()
-    var toogleFullScreenButton = UIButton()
-    var playButton = UIButton()
-    var pauseButton = UIButton()
-    var nextButton = UIButton()
-    var backButton = UIButton()
+    lazy var infoLabel = UILabel()
+    lazy var totalTime = UILabel()
+    lazy var currentTime = UILabel()
+    lazy var activityIndicator = UIActivityIndicatorView()
+    lazy var playerView = UIView()
+    lazy var contentView = UIView()
+    lazy var toogleFullScreenButton = UIButton()
+    lazy var playButton = UIButton()
+    lazy var pauseButton = UIButton()
+    lazy var nextButton = UIButton()
+    lazy var backButton = UIButton()
+    lazy var matchIdTextField = UITextField()
+    lazy var progressView = UISlider()
     var tableView: UITableView!
-    var matchIdTextField = UITextField()
-    var progressView = UISlider()
     private let videoPlayer = StreamingVideoPlayer()
     
     //MARK: ViewDidAppear
