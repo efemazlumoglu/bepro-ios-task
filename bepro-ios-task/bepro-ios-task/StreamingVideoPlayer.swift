@@ -60,7 +60,6 @@ public class StreamingVideoPlayer {
     }
     
     @objc func playerDidFinishPlaying(note: NSNotification){
-        print("Video Finished")
         NotificationCenter.default.post(name: Notification.Name("PlayingFinished"), object: nil) // post the notif to the view controller
     }
       

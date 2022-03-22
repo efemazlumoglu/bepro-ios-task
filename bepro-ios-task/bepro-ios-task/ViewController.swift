@@ -56,6 +56,7 @@ class ViewController: UIViewController {
     var progressView = UIProgressView(progressViewStyle: UIProgressView.Style.bar)
     private let videoPlayer = StreamingVideoPlayer()
     
+    //MARK: ViewDidAppear
     override func viewDidAppear(_ animated: Bool) { // this for at the launch it will always open at portrait mode
         super.viewDidAppear(animated)
         UIView.setAnimationsEnabled(false)
@@ -66,6 +67,7 @@ class ViewController: UIViewController {
         self.portraitCenterY = self.view.center.y
     }
     
+    //MARK: viewWillTransition
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) { // to detect of the interface orientation of screen
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
@@ -93,14 +95,18 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: SupportedInterfaceOrientation
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return [.portrait, .landscape]
     }
     
+    //MARK: LoadView
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
-        
+        //MARK: Notification Center Observer
         NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil) // get the notif from video player of video is finished
+        
+        //MARK: MatchIdTextField
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
@@ -124,6 +130,7 @@ class ViewController: UIViewController {
             matchIdTextField.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20)
         ])
         
+        //MARK: PlayerView
         playerView.translatesAutoresizingMaskIntoConstraints = false
         playerView.isHidden = playerViewHideBool
         playerView.layer.cornerRadius = 20
@@ -148,6 +155,7 @@ class ViewController: UIViewController {
             videoPlayer.playerViewController.modalPresentationStyle = .fullScreen
         }
         
+        //MARK: TotalTime, CurrenTime and ProgressView
         totalTime.translatesAutoresizingMaskIntoConstraints = false
         currentTime.translatesAutoresizingMaskIntoConstraints = false
         
@@ -155,9 +163,10 @@ class ViewController: UIViewController {
         progressView.isHidden = progressBarHideBool
         progressView.backgroundColor = .systemGray3
         progressView.translatesAutoresizingMaskIntoConstraints = false
+        // addPeriodicTimeObserver helps us to get current time of the videplayer and also the total time. For creating progress view.
         videoPlayer.avPlayer.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1/30.0, preferredTimescale: Int32(NSEC_PER_SEC)), queue: nil) { time in
             let duration = CMTimeGetSeconds(self.videoPlayer.avPlayer.currentItem!.duration)
-            self.totalTime.text = self.videoPlayer.avPlayer.currentItem!.duration.displayTime
+            self.totalTime.text = self.videoPlayer.avPlayer.currentItem!.duration.displayTime // for displayTime please look for the CMTimeExt extension
             self.currentTime.text = self.videoPlayer.avPlayer.currentItem?.currentTime().displayTime
             self.progressView.progress = Float((CMTimeGetSeconds(time) / duration))
         }
@@ -176,6 +185,7 @@ class ViewController: UIViewController {
             progressView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
         ])
         
+        //MARK: ContentView
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.isHidden = contentViewHideBool
         self.view.addSubview(contentView)
@@ -187,6 +197,7 @@ class ViewController: UIViewController {
             contentView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
         ])
         
+        // MARK: PlayButton
         playButton.translatesAutoresizingMaskIntoConstraints = false
         playButton.addTarget(self, action: #selector(playTapped), for: .allTouchEvents)
         playButton.backgroundColor = UIColor.systemBlue
@@ -195,6 +206,7 @@ class ViewController: UIViewController {
         playButton.setTitle("Play", for: .normal)
         self.contentView.addSubview(playButton)
         
+        // MARK: ToogleFullScreenButton
         toogleFullScreenButton.translatesAutoresizingMaskIntoConstraints = false
         toogleFullScreenButton.addTarget(self, action: #selector(openFullScreen), for: .allTouchEvents)
         toogleFullScreenButton.backgroundColor = .systemGreen
@@ -203,6 +215,7 @@ class ViewController: UIViewController {
         toogleFullScreenButton.setTitle("Full", for: .normal)
         self.contentView.addSubview(toogleFullScreenButton)
         
+        //MARK: PauseButton
         pauseButton.translatesAutoresizingMaskIntoConstraints = false
         pauseButton.addTarget(self, action: #selector(pauseTapped), for: .allTouchEvents)
         pauseButton.backgroundColor = UIColor.systemOrange
@@ -229,22 +242,23 @@ class ViewController: UIViewController {
             toogleFullScreenButton.trailingAnchor.constraint(equalTo: pauseButton.leadingAnchor, constant: -10),
         ])
         
-        
+        //MARK: TableView
         let myTableView = UITableView()
-        myTableView.frame = CGRect(x: 0, y: self.portraitCenterY + 120, width: self.portraitWidth, height: self.portraitHeight - 402)
+        myTableView.frame = CGRect(x: 0, y: self.portraitCenterY + 120, width: self.portraitWidth, height: self.portraitHeight - 402) // you have give frame for the table view to add into the view
         myTableView.translatesAutoresizingMaskIntoConstraints = false
         myTableView.delegate = self
         myTableView.dataSource = self
         myTableView.backgroundColor = .white
-        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        myTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell") // register a tableview cell. A default one i choose.
         myTableView.allowsSelection = true
-        myTableView.allowsMultipleSelection = false
+        myTableView.allowsMultipleSelection = false // i do not want users can able to select multiple cells.
         myTableView.isHidden = hideTableViewBool
-        self.tableView = myTableView
+        self.tableView = myTableView // this is how you create a table view inside loadview otherwise you cannot add tableview as a uiview into the view.
         self.view.addSubview(self.tableView)
         
         self.tableView.reloadData()
         
+        //MARK: Activity Indicator and Blur Effect
         if (!activityIndicator.isHidden) { // this condition is for the ui when the request is sending if you press play button
             let blurEffect = UIBlurEffect(style: UIBlurEffect.Style.dark)
             let blurEffectView = UIVisualEffectView(effect: blurEffect)
@@ -267,10 +281,12 @@ class ViewController: UIViewController {
             ])
         }
         
+        //MARK: Video player setting up
         setupVideoPlayer() // videoPlayerSetup go to the StreamingVideoPlayer class to see
         
     }
     
+    // MARK: Playing Finished Selector.
     @objc func playingFinished() { // this is for second half is opening sequentially
         if videoURL == "First Half" {
             var fileUrl = URL(string: self.firstHalfVideoUrl)!
@@ -280,6 +296,7 @@ class ViewController: UIViewController {
         }
     }
     
+    //MARK: Play Tapped selector
     @objc func playTapped() {
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
@@ -294,18 +311,21 @@ class ViewController: UIViewController {
         }
     }
     
+    //MARK: PauseTapped Selector
     @objc func pauseTapped() {
         videoPlayer.pause()
         playButton.isUserInteractionEnabled = true
         pauseButton.isUserInteractionEnabled = false
     }
     
+    //MARK: Open Full Screen Selector
     @objc func openFullScreen() { // for opening in full screen mode i changed the interface orientation to landscape cause i did this functionality for that
         UIView.setAnimationsEnabled(false)
         UIDevice.current.setValue(UIInterfaceOrientation.landscapeRight.rawValue, forKey: "orientation")
         UIView.setAnimationsEnabled(true)
     }
     
+    // MARK: Call Halfs Method
     func callHalfs(halfOption: String) { // for first half and second halfs of the game
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
             let alert = UIAlertController(title: "Warning", message: "Video url cannot found", preferredStyle: UIAlertController.Style.alert)
@@ -324,10 +344,12 @@ class ViewController: UIViewController {
         }
     }
     
+    // MARK: Setup Video Player method.
     private func setupVideoPlayer() { // calling the streaming video player class method
         videoPlayer.add(to: self.playerView)
     }
     
+    //MARK: RequestSend method.
     private func requestSend() { // rx call api
         
         playButton.isUserInteractionEnabled = false
@@ -382,6 +404,7 @@ class ViewController: UIViewController {
     
 }
 
+//MARK: Extension for UITextField Delegate
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         let matchId: Int = Int(textField.text!)!
@@ -409,6 +432,7 @@ extension ViewController: UITextFieldDelegate {
     }
 }
 
+//MARK: ViewController extension for TableViewDelegate and Datasource
 extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
