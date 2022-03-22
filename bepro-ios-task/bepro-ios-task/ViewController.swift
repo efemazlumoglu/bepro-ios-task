@@ -169,11 +169,11 @@ class ViewController: UIViewController {
                 backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-                backButton.widthAnchor.constraint(equalToConstant: 60),
+                backButton.widthAnchor.constraint(equalToConstant: 100),
                 nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-                nextButton.widthAnchor.constraint(equalToConstant: 60)
+                nextButton.widthAnchor.constraint(equalToConstant: 100)
             ])
             
             videoPlayer.playerViewController.showsPlaybackControls = false
@@ -186,11 +186,11 @@ class ViewController: UIViewController {
                 backButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 backButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 backButton.leadingAnchor.constraint(equalTo: playerView.leadingAnchor),
-                backButton.widthAnchor.constraint(equalToConstant: 80),
+                backButton.widthAnchor.constraint(equalToConstant: 120),
                 nextButton.topAnchor.constraint(equalTo: playerView.topAnchor),
                 nextButton.bottomAnchor.constraint(equalTo: playerView.bottomAnchor),
                 nextButton.trailingAnchor.constraint(equalTo: playerView.trailingAnchor),
-                nextButton.widthAnchor.constraint(equalToConstant: 80)
+                nextButton.widthAnchor.constraint(equalToConstant: 120)
             ])
             
             videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
@@ -376,6 +376,11 @@ class ViewController: UIViewController {
     
     //MARK: Next Tapped Function
     @objc func nextTapped() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.nextButton.setTitle(">>>", for: .normal)
+            self.nextButton.backgroundColor = .systemGray2.withAlphaComponent(0.5)
+            self.nextButton.setTitleColor(.systemRed, for: .normal)
+        }
         self.matchIdTextField.resignFirstResponder()
         guard let duration  = videoPlayer.avPlayer.currentItem?.duration else {
             return
@@ -387,18 +392,30 @@ class ViewController: UIViewController {
 
             let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
             videoPlayer.avPlayer.seek(to: time2)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+                    self.nextButton.setTitle("", for: .normal)
+                    self.nextButton.backgroundColor = .white.withAlphaComponent(0)
+                }
+            }
         } else {
             if (videoURL != "Second Half") {
                 var fileUrl = URL(string: self.firstHalfVideoUrl)!
                 videoURL = "Second Half"
                 fileUrl = URL(string: self.secondHalfVideoUrl)!
                 self.videoPlayer.play(url: fileUrl)
+                self.nextButton.setTitle("", for: .normal)
             }
         }
     }
     
     //MARK: Back Tapped Function
     @objc func backTapped() {
+        UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
+            self.backButton.setTitle("<<<", for: .normal)
+            self.backButton.setTitleColor(.systemRed, for: .normal)
+            self.backButton.backgroundColor = .systemGray2.withAlphaComponent(0.5)
+        }
         self.matchIdTextField.resignFirstResponder()
         let playerCurrentTime = CMTimeGetSeconds(videoPlayer.avPlayer.currentTime())
         var newTime = playerCurrentTime - seekDuration
@@ -408,6 +425,12 @@ class ViewController: UIViewController {
         }
         let time2: CMTime = CMTimeMake(value: Int64(newTime * 1000 as Float64), timescale: 1000)
         videoPlayer.avPlayer.seek(to: time2)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+            UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseInOut) {
+                self.backButton.setTitle("", for: .normal)
+                self.nextButton.backgroundColor = .white.withAlphaComponent(0)
+            }
+        }
     }
     
     // MARK: Call Halfs Method
