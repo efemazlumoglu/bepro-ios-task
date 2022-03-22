@@ -43,7 +43,7 @@ class ViewController: UIViewController {
     var portraitCenterY: CGFloat = 0
     let seekDuration: Float64 = 5
     
-    lazy var infoLabel = UILabel()
+    lazy var infoLabel = UILabel() // i use lazy var cause a property whose initial value is not calculated until the first time it's called.
     lazy var totalTime = UILabel()
     lazy var currentTime = UILabel()
     lazy var activityIndicator = UIActivityIndicatorView()
