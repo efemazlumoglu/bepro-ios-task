@@ -133,15 +133,14 @@ class ViewController: UIViewController {
             ])
         } else {
             NSLayoutConstraint.activate([
-                playerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-                playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
-                playerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-                playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor)
+                playerView.topAnchor.constraint(equalTo: view.topAnchor),
+                playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+                playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+                playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ])
             
             videoPlayer.playerViewController.entersFullScreenWhenPlaybackBegins = true
             videoPlayer.playerViewController.modalPresentationStyle = .fullScreen
-            
         }
         
         totalTime.translatesAutoresizingMaskIntoConstraints = false
@@ -303,7 +302,7 @@ class ViewController: UIViewController {
         UIView.setAnimationsEnabled(true)
     }
     
-    func callHalfs(halfOption: String) {
+    func callHalfs(halfOption: String) { // for first half and second halfs of the game
         if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") {
             let alert = UIAlertController(title: "Warning", message: "Video url cannot found", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
@@ -321,11 +320,11 @@ class ViewController: UIViewController {
         }
     }
     
-    private func setupVideoPlayer() {
+    private func setupVideoPlayer() { // calling the streaming video player class method
         videoPlayer.add(to: self.playerView)
     }
     
-    private func requestSend() {
+    private func requestSend() { // rx call api
         
         playButton.isUserInteractionEnabled = false
         pauseButton.isUserInteractionEnabled = true
@@ -353,7 +352,7 @@ class ViewController: UIViewController {
                     self.firstHalfVideoUrl = self.firstHalfVideo!.servingURL
                     self.secondHalfVideoUrl = self.secondHalfVideo!.servingURL
                     
-                    DispatchQueue.main.async {
+                    DispatchQueue.main.async { // ui updates must be on main thread
                         self.videoURL = "First Half"
                         self.callHalfs(halfOption: "First Half")
                         self.activityIndicator.isHidden = true
@@ -380,8 +379,6 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // called when 'return' key pressed. return NO to ignore.
-        print("TextField should return method called")
         let matchId: Int = Int(textField.text!)!
         self.matchId = matchId
         if matchId != 25199 {
@@ -401,7 +398,6 @@ extension ViewController: UITextFieldDelegate {
             loadView()
             requestSend()
         }
-        // may be useful: textField.resignFirstResponder()
         textField.resignFirstResponder()
         return true
     }
