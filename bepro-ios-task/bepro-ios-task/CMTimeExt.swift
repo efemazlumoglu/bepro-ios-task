@@ -23,7 +23,7 @@ extension CMTime { // this extension is for view controller variable called tota
         return formatter.string(from: sec) ?? nil
     }
 
-    public var seconds: Double? {
+    public var seconds: Double? { // return the seconds of time
         let time = CMTimeGetSeconds(self)
         guard time.isNaN == false else { return nil }
         return time
