@@ -23,8 +23,8 @@ class ViewController: UIViewController {
     var secondHalfData: Datum?
     var firstHalfVideo: Video?
     var secondHalfVideo: Video?
-    var paddingValueFirstHalf: Int = 0
-    var paddingValueSecondHalf: Int = 0
+    var paddingValueFirstHalf: String = ""
+    var paddingValueSecondHalf: String = ""
     
     var firstHalfVideoTitle: String = ""
     var secondHalfVideoTitle: String = ""
@@ -497,6 +497,7 @@ class ViewController: UIViewController {
     //MARK: RequestSend method.
     public func requestSend() { // rx call api
         
+        // before sending the request need to set padding
         playButton.isUserInteractionEnabled = false
         pauseButton.isUserInteractionEnabled = true
         activityIndicator.isHidden = false

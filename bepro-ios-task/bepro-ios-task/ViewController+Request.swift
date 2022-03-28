@@ -25,8 +25,8 @@ extension ViewController {
                     self.firstHalfData = self.data![0]
                     self.secondHalfData = self.data![1]
                     
-                    self.paddingValueFirstHalf = self.firstHalfData!.padding
-                    self.paddingValueSecondHalf = self.secondHalfData!.padding
+                    self.paddingValueFirstHalf = String(self.firstHalfData!.padding)
+                    self.paddingValueSecondHalf = String(self.secondHalfData!.padding)
                     
                     self.firstHalfVideo = self.firstHalfData?.video
                     self.secondHalfVideo = self.secondHalfData?.video
@@ -48,6 +48,7 @@ extension ViewController {
                         self.progressBarHideBool = false
                         self.loadView()
                         self.tableView.reloadData()
+                        self.changePadding()
                     }
                     
                 }, onError: {
