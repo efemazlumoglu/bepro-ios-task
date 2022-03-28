@@ -17,6 +17,7 @@ extension ViewController {
             textField.placeholder = "Enter Padding Value"
             textField.text = self.paddingValueFirstHalf
         }
+        
         let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
             let firstTextField = alertController.textFields![0] as UITextField
             self.playButton.isUserInteractionEnabled = false
@@ -26,10 +27,8 @@ extension ViewController {
             
             self.paddingValueFirstHalf = firstTextField.text!
         })
+        
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
-        alertController.addTextField { (textField : UITextField!) -> Void in
-            textField.placeholder = "Enter First Name"
-        }
 
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
