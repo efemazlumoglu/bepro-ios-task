@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     var secondHalfData: Datum?
     var firstHalfVideo: Video?
     var secondHalfVideo: Video?
+    var paddingValueFirstHalf: Int = 0
+    var paddingValueSecondHalf: Int = 0
     
     var firstHalfVideoTitle: String = ""
     var secondHalfVideoTitle: String = ""

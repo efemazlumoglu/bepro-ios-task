@@ -25,6 +25,9 @@ extension ViewController {
                     self.firstHalfData = self.data![0]
                     self.secondHalfData = self.data![1]
                     
+                    self.paddingValueFirstHalf = self.firstHalfData!.padding
+                    self.paddingValueSecondHalf = self.secondHalfData!.padding
+                    
                     self.firstHalfVideo = self.firstHalfData?.video
                     self.secondHalfVideo = self.secondHalfData?.video
                     
