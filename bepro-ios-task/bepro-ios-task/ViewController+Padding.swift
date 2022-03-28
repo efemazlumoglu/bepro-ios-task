@@ -15,7 +15,7 @@ extension ViewController {
         let alertController = UIAlertController(title: "Change The Padding Value", message: "", preferredStyle: .alert)
         alertController.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Enter Padding Value"
-            textField.text = self.paddingValueFirstHalf
+            textField.text = self.viewModel.paddingValueFirstHalf
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
@@ -25,7 +25,7 @@ extension ViewController {
             self.activityIndicator.isHidden = false
             self.activityIndicator.startAnimating()
             
-            self.paddingValueFirstHalf = firstTextField.text!
+            self.viewModel.paddingValueFirstHalf = firstTextField.text!
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })

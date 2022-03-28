@@ -22,11 +22,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         var config = cell.defaultContentConfiguration() // when you are using default table view cell you have to use config cause textLabel etc is deprecated.
         if (data == "First Half") {
-            config.text = self.firstHalfVideoTitle
+            config.text = self.viewModel.firstHalfVideoTitle
         } else {
-            config.text = self.secondHalfVideoTitle
+            config.text = self.viewModel.secondHalfVideoTitle
         }
-        if data == self.videoURL { // double check for you cannot click on the first half video title if you are already in the first half
+        if data == self.viewModel.videoURL { // double check for you cannot click on the first half video title if you are already in the first half
             cell.isUserInteractionEnabled = false
         } else {
             cell.isUserInteractionEnabled = true
@@ -37,7 +37,7 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let data = self.listOfOptions[indexPath.row]
-        if self.videoURL != data { //you cannot click on the first half video title if you are already in the first half
+        if self.viewModel.videoURL != data { //you cannot click on the first half video title if you are already in the first half
             self.callHalfs(halfOption: data)
         }
         self.tableView.reloadData()

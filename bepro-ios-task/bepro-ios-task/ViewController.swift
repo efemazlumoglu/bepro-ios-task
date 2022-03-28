@@ -13,22 +13,7 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
-    var matchId: Int = 25199 // when you put other id here it will need a logged in user
-    var firstHalfVideoUrl: String = ""
-    var secondHalfVideoUrl: String = ""
-    var matchVideo: MatchVideo?
-    var data: [Datum]?
-    let disposeBag = DisposeBag()
-    var firstHalfData: Datum?
-    var secondHalfData: Datum?
-    var firstHalfVideo: Video?
-    var secondHalfVideo: Video?
-    var paddingValueFirstHalf: String = ""
-    var paddingValueSecondHalf: String = ""
-    
-    var firstHalfVideoTitle: String = ""
-    var secondHalfVideoTitle: String = ""
-    var videoURL: String = ""
+    var viewModel = ViewModel.shared
     
     var listOfOptions: [String] = ["First Half", "Second Half"]
     
@@ -86,7 +71,7 @@ class ViewController: UIViewController {
         } else if UIDevice.current.orientation.isPortrait {
             isPortraitBool = true
             isLandscapeBool = false
-            if (self.firstHalfVideoUrl != "") {
+            if (self.viewModel.firstHalfVideoUrl != "") {
                 hideTableViewBool = false
                 contentViewHideBool = false
                 playerViewHideBool = false
@@ -126,7 +111,7 @@ class ViewController: UIViewController {
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
-        matchIdTextField.text = String(matchId)
+        matchIdTextField.text = String(describing: self.viewModel.matchId)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
         matchIdTextField.layer.borderWidth = 1
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -340,10 +325,10 @@ class ViewController: UIViewController {
     
     // MARK: Playing Finished Selector.
     @objc func playingFinished() { // this is for second half is opening sequentially
-        if videoURL == "First Half" {
-            var fileUrl = URL(string: self.firstHalfVideoUrl)!
-            videoURL = "Second Half"
-            fileUrl = URL(string: self.secondHalfVideoUrl)!
+        if self.viewModel.videoURL == "First Half" {
+            var fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
+            self.viewModel.videoURL = "Second Half"
+            fileUrl = URL(string: self.viewModel.secondHalfVideoUrl)!
             self.videoPlayer.play(url: fileUrl)
         }
     }
@@ -367,7 +352,7 @@ class ViewController: UIViewController {
     //MARK: Play Tapped selector
     @objc func playTapped() {
         self.matchIdTextField.resignFirstResponder()
-        if (self.firstHalfVideoUrl == "" && self.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
+        if (self.viewModel.firstHalfVideoUrl == "" && self.viewModel.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
             self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
@@ -433,10 +418,10 @@ class ViewController: UIViewController {
                 }
             }
         } else {
-            if (videoURL != "Second Half") {
-                var fileUrl = URL(string: self.firstHalfVideoUrl)!
-                videoURL = "Second Half"
-                fileUrl = URL(string: self.secondHalfVideoUrl)!
+            if (self.viewModel.videoURL != "Second Half") {
+                var fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
+                self.viewModel.videoURL = "Second Half"
+                fileUrl = URL(string: self.viewModel.secondHalfVideoUrl)!
                 self.videoPlayer.play(url: fileUrl)
                 self.nextButton.setTitle("", for: .normal)
             }
@@ -470,18 +455,6 @@ class ViewController: UIViewController {
     // MARK: Setup Video Player method.
     public func setupVideoPlayer() { // calling the streaming video player class method
         videoPlayer.add(to: self.playerView)
-    }
-    
-    //MARK: RequestSend method.
-    public func requestSend() { // rx call api
-        
-        // before sending the request need to set padding
-        playButton.isUserInteractionEnabled = false
-        pauseButton.isUserInteractionEnabled = true
-        activityIndicator.isHidden = false
-        activityIndicator.startAnimating()
-        
-        self.requestSending()
     }
     
 }

@@ -13,9 +13,9 @@
 		F358B3AE27E90DAD00BFC2DC /* CMTimeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */; };
 		F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */; };
 		F3B9477727F1CE77009DDE29 /* ViewController+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */; };
-		F3B9477927F1CEF9009DDE29 /* ViewController+Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477827F1CEF9009DDE29 /* ViewController+Request.swift */; };
 		F3B9477B27F1D1FE009DDE29 /* ViewController+Padding.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477A27F1D1FE009DDE29 /* ViewController+Padding.swift */; };
 		F3B9477D27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477C27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift */; };
+		F3B9477F27F1D820009DDE29 /* ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477E27F1D820009DDE29 /* ViewModel.swift */; };
 		F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */; };
 		F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3B27E4CD1900245B27 /* ViewController.swift */; };
 		F3CE6F4127E4CD1B00245B27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */; };
@@ -59,9 +59,9 @@
 		F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTimeExt.swift; sourceTree = "<group>"; };
 		F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TableView.swift"; sourceTree = "<group>"; };
 		F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TextField.swift"; sourceTree = "<group>"; };
-		F3B9477827F1CEF9009DDE29 /* ViewController+Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Request.swift"; sourceTree = "<group>"; };
 		F3B9477A27F1D1FE009DDE29 /* ViewController+Padding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+Padding.swift"; sourceTree = "<group>"; };
 		F3B9477C27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+CallsHalfs.swift"; sourceTree = "<group>"; };
+		F3B9477E27F1D820009DDE29 /* ViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModel.swift; sourceTree = "<group>"; };
 		F3CE6F3427E4CD1900245B27 /* bepro-ios-task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bepro-ios-task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3CE6F3B27E4CD1900245B27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -143,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */,
+				F3B9477E27F1D820009DDE29 /* ViewModel.swift */,
 				F3CE6F6727E4D21000245B27 /* MatchVideo.swift */,
 				F3CE6F7327E618C900245B27 /* RequestObservable.swift */,
 				F3CE6F7527E61B2600245B27 /* APIClient.swift */,
@@ -151,7 +152,6 @@
 				F3CE6F3B27E4CD1900245B27 /* ViewController.swift */,
 				F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */,
 				F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */,
-				F3B9477827F1CEF9009DDE29 /* ViewController+Request.swift */,
 				F3B9477A27F1D1FE009DDE29 /* ViewController+Padding.swift */,
 				F3B9477C27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift */,
 				F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */,
@@ -435,11 +435,11 @@
 				F3CE6F7827E6311900245B27 /* StreamingVideoPlayer.swift in Sources */,
 				F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */,
 				F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */,
+				F3B9477F27F1D820009DDE29 /* ViewModel.swift in Sources */,
 				F3B9477727F1CE77009DDE29 /* ViewController+TextField.swift in Sources */,
 				F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */,
 				F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */,
 				F3B9477B27F1D1FE009DDE29 /* ViewController+Padding.swift in Sources */,
-				F3B9477927F1CEF9009DDE29 /* ViewController+Request.swift in Sources */,
 				F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
