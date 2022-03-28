@@ -12,6 +12,7 @@
 		AC3C2785CD4627A8D315CD2B /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */; };
 		F358B3AE27E90DAD00BFC2DC /* CMTimeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */; };
 		F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */; };
+		F3B9477727F1CE77009DDE29 /* ViewController+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */; };
 		F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */; };
 		F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3CE6F3B27E4CD1900245B27 /* ViewController.swift */; };
 		F3CE6F4127E4CD1B00245B27 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */; };
@@ -54,6 +55,7 @@
 		A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-taskTests.debug.xcconfig"; path = "Target Support Files/Pods-bepro-ios-taskTests/Pods-bepro-ios-taskTests.debug.xcconfig"; sourceTree = "<group>"; };
 		F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTimeExt.swift; sourceTree = "<group>"; };
 		F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TableView.swift"; sourceTree = "<group>"; };
+		F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TextField.swift"; sourceTree = "<group>"; };
 		F3CE6F3427E4CD1900245B27 /* bepro-ios-task.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "bepro-ios-task.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3CE6F3727E4CD1900245B27 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3CE6F3B27E4CD1900245B27 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				F3CE6F7727E6311900245B27 /* StreamingVideoPlayer.swift */,
 				F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */,
 				F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */,
+				F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				F3CE6F7827E6311900245B27 /* StreamingVideoPlayer.swift in Sources */,
 				F3CE6F3C27E4CD1900245B27 /* ViewController.swift in Sources */,
 				F3CE6F3827E4CD1900245B27 /* AppDelegate.swift in Sources */,
+				F3B9477727F1CE77009DDE29 /* ViewController+TextField.swift in Sources */,
 				F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */,
 				F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */,
 				F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */,
