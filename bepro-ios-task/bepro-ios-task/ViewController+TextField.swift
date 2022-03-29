@@ -36,7 +36,7 @@ extension ViewController: UITextFieldDelegate {
             progressBarHideBool = true
             activityIndicator.startAnimating()
             self.loadView()
-            ViewModel.shared.fetchVideoDetails()
+            self.fetchVideoDetails()
         }
         textField.resignFirstResponder()
         return true

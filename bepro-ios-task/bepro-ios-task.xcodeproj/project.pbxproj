@@ -10,6 +10,8 @@
 		4AB536A985EE10A4525A74CF /* Pods_bepro_ios_taskTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6063B4907F1EEC983A0DC494 /* Pods_bepro_ios_taskTests.framework */; };
 		560A0AC6526C39A1D4C950C2 /* Pods_bepro_ios_task.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91862CE075843AFB05B1EF51 /* Pods_bepro_ios_task.framework */; };
 		AC3C2785CD4627A8D315CD2B /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */; };
+		F34651E127F2F0AE009DCC53 /* ViewController+ChangeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34651E027F2F0AE009DCC53 /* ViewController+ChangeLayout.swift */; };
+		F34651E327F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34651E227F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift */; };
 		F358B3AE27E90DAD00BFC2DC /* CMTimeExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */; };
 		F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */; };
 		F3B9477727F1CE77009DDE29 /* ViewController+TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */; };
@@ -56,6 +58,8 @@
 		9B9AB47310883FC9BA622192 /* Pods_bepro_ios_task_bepro_ios_taskUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_bepro_ios_task_bepro_ios_taskUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CB8359372D1A28DE6AF78F8 /* Pods-bepro-ios-taskTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-taskTests.release.xcconfig"; path = "Target Support Files/Pods-bepro-ios-taskTests/Pods-bepro-ios-taskTests.release.xcconfig"; sourceTree = "<group>"; };
 		A3C0DCEE431DBC5359D22B98 /* Pods-bepro-ios-taskTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bepro-ios-taskTests.debug.xcconfig"; path = "Target Support Files/Pods-bepro-ios-taskTests/Pods-bepro-ios-taskTests.debug.xcconfig"; sourceTree = "<group>"; };
+		F34651E027F2F0AE009DCC53 /* ViewController+ChangeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+ChangeLayout.swift"; sourceTree = "<group>"; };
+		F34651E227F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+FetchMatchDetails.swift"; sourceTree = "<group>"; };
 		F358B3AD27E90DAD00BFC2DC /* CMTimeExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CMTimeExt.swift; sourceTree = "<group>"; };
 		F3B9477427F1CD9C009DDE29 /* ViewController+TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TableView.swift"; sourceTree = "<group>"; };
 		F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ViewController+TextField.swift"; sourceTree = "<group>"; };
@@ -157,6 +161,8 @@
 				F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */,
 				F3CE6F4227E4CD1B00245B27 /* LaunchScreen.storyboard */,
 				F3CE6F4527E4CD1B00245B27 /* Info.plist */,
+				F34651E027F2F0AE009DCC53 /* ViewController+ChangeLayout.swift */,
+				F34651E227F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";
@@ -429,6 +435,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F34651E127F2F0AE009DCC53 /* ViewController+ChangeLayout.swift in Sources */,
 				F358B3AE27E90DAD00BFC2DC /* CMTimeExt.swift in Sources */,
 				F3B9477D27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift in Sources */,
 				F3CE6F7427E618C900245B27 /* RequestObservable.swift in Sources */,
@@ -440,6 +447,7 @@
 				F3CE6F7627E61B2600245B27 /* APIClient.swift in Sources */,
 				F3B9477527F1CD9C009DDE29 /* ViewController+TableView.swift in Sources */,
 				F3B9477B27F1D1FE009DDE29 /* ViewController+Padding.swift in Sources */,
+				F34651E327F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift in Sources */,
 				F3CE6F6827E4D21000245B27 /* MatchVideo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

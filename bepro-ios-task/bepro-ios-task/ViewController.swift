@@ -13,6 +13,9 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
+    static let shared = ViewController()
+    var disposeBag = DisposeBag()
+    
     var listOfOptions: [String] = ["First Half", "Second Half"]
     
     var hideTableViewBool: Bool = true
@@ -390,8 +393,6 @@ class ViewController: UIViewController {
     
     //MARK: Next Tapped Function
     @objc func nextTapped() {
-        
-        
         
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) { // animation for next button changes
             self.nextButton.setTitle(">>>", for: .normal)
