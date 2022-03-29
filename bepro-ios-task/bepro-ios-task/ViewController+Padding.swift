@@ -16,6 +16,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         return 2
     }
     
+    // set the values for time picker for first half and second half
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
             case 0:
@@ -36,6 +37,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         }
     }
     
+    // components
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         switch component {
             case 0:
@@ -47,6 +49,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         }
     }
     
+    // get the total values in milisecond version
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         switch component {
             case 0:
