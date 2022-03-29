@@ -30,6 +30,8 @@ class ViewController: UIViewController {
     var portraitWidth: CGFloat = 0
     var portraitCenterY: CGFloat = 0
     let seekDuration: Float64 = 5
+    var minutes:Int = 0
+    var seconds:Int = 0
     
     lazy var infoLabel = UILabel() // i use lazy var cause a property whose initial value is not calculated until the first time it's called.
     lazy var totalTime = UILabel()
@@ -44,6 +46,7 @@ class ViewController: UIViewController {
     lazy var backButton = UIButton()
     lazy var matchIdTextField = UITextField()
     lazy var progressView = UISlider()
+    lazy var timePicker = UIPickerView()
     var tableView: UITableView!
     public let videoPlayer = StreamingVideoPlayer()
     
@@ -90,6 +93,7 @@ class ViewController: UIViewController {
     //MARK: LoadView
     override func loadView() { // since we are not usign storyboards loadView is the first priority method that ios application life cycle so i used it
         super.loadView()
+        self.timePicker.delegate = self
         //MARK: Notification Center Observer
         NotificationCenter.default.addObserver(self, selector: #selector(playingFinished), name: Notification.Name("PlayingFinished"), object: nil) // get the notif from video player of video is finished
         
