@@ -28,7 +28,6 @@ extension ViewController {
                 self.changePadding()
             }
             self.videoPlayer.play(url: fileUrl)
-            self.videoPlayer.pause()
             self.progressView.value = 0
             self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
             self.playButton.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.4)

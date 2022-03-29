@@ -65,10 +65,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     
     
     public func changePadding() {
-        
         openTimePicker()
-        
-        self.videoPlayer.avPlayer.pause()
     }
     
     func openTimePicker()  {
@@ -108,7 +105,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     @objc func closePicker() {
         
         let totalMilis = minutes + seconds
-        
+        print(totalMilis)
         if ViewModel.shared.videoURL == "First Half" {
             let value = Float64(Int(totalMilis)) / 1000
             let seekTime = CMTime(value: Int64(value), timescale: 1)
