@@ -18,16 +18,16 @@ public class RequestObservable { // this observable this reactive way of doing i
     
     //MARK: urlsession takes function
     public func callAPI<MatchVideo: Decodable>(request: URLRequest) -> Observable<MatchVideo> {
-        return Observable.create {
+        return Observable.create { [weak self]
             observer in
-            let task = self.urlSession.dataTask(with: request) {
+            let task = self!.urlSession.dataTask(with: request) {
                 (data, response, error) in
                 if let httpResponse = response as? HTTPURLResponse {
                     let statusCode = httpResponse.statusCode
                     do {
                         let _data = data ?? Data()
                         if (200...399).contains(statusCode) { // i add this contiditon for status codes otherwise i do not know which status is returning in which api calls
-                            let objs = try self.jsonDecoder.decode(MatchVideo.self, from: _data)
+                            let objs = try self!.jsonDecoder.decode(MatchVideo.self, from: _data)
                             observer.onNext(objs)
                         } else {
                             print("observer on error: ", error!)

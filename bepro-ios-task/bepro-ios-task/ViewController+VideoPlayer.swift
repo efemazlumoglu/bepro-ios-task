@@ -9,8 +9,6 @@ import Foundation
 import UIKit
 import AVFoundation
 
-
-
 extension ViewController {
     // MARK: Playing Finished Selector.
     @objc func playingFinished() { // this is for second half is opening sequentially
