@@ -13,8 +13,6 @@ import RxCocoa
 
 class ViewController: UIViewController {
     
-    var viewModel = ViewModel.shared
-    
     var listOfOptions: [String] = ["First Half", "Second Half"]
     
     var hideTableViewBool: Bool = true
@@ -71,7 +69,7 @@ class ViewController: UIViewController {
         } else if UIDevice.current.orientation.isPortrait {
             isPortraitBool = true
             isLandscapeBool = false
-            if (self.viewModel.firstHalfVideoUrl != "") {
+            if (ViewModel.shared.firstHalfVideoUrl != "") {
                 hideTableViewBool = false
                 contentViewHideBool = false
                 playerViewHideBool = false
@@ -111,7 +109,7 @@ class ViewController: UIViewController {
         self.matchIdTextField =  UITextField(frame: CGRect(x: 20, y: 100, width: 200, height: 44))
         matchIdTextField.placeholder = "Enter Match Id Here"
         matchIdTextField.font = UIFont.systemFont(ofSize: 15)
-        matchIdTextField.text = String(describing: self.viewModel.matchId)
+        matchIdTextField.text = String(describing: ViewModel.shared.matchId)
         matchIdTextField.borderStyle = UITextField.BorderStyle.roundedRect
         matchIdTextField.layer.borderWidth = 1
         matchIdTextField.autocorrectionType = UITextAutocorrectionType.no
@@ -325,10 +323,10 @@ class ViewController: UIViewController {
     
     // MARK: Playing Finished Selector.
     @objc func playingFinished() { // this is for second half is opening sequentially
-        if self.viewModel.videoURL == "First Half" {
-            var fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
-            self.viewModel.videoURL = "Second Half"
-            fileUrl = URL(string: self.viewModel.secondHalfVideoUrl)!
+        if ViewModel.shared.videoURL == "First Half" {
+            var fileUrl = URL(string: ViewModel.shared.firstHalfVideoUrl)!
+            ViewModel.shared.videoURL = "Second Half"
+            fileUrl = URL(string: ViewModel.shared.secondHalfVideoUrl)!
             self.videoPlayer.play(url: fileUrl)
         }
     }
@@ -352,7 +350,7 @@ class ViewController: UIViewController {
     //MARK: Play Tapped selector
     @objc func playTapped() {
         self.matchIdTextField.resignFirstResponder()
-        if (self.viewModel.firstHalfVideoUrl == "" && self.viewModel.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
+        if (ViewModel.shared.firstHalfVideoUrl == "" && ViewModel.shared.secondHalfVideoUrl == "") { // this condition is for not to send request again and again
             playButton.isUserInteractionEnabled = false
             pauseButton.isUserInteractionEnabled = true
             self.pauseButton.backgroundColor = UIColor.systemOrange.withAlphaComponent(1)
@@ -418,10 +416,10 @@ class ViewController: UIViewController {
                 }
             }
         } else {
-            if (self.viewModel.videoURL != "Second Half") {
-                var fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
-                self.viewModel.videoURL = "Second Half"
-                fileUrl = URL(string: self.viewModel.secondHalfVideoUrl)!
+            if (ViewModel.shared.videoURL != "Second Half") {
+                var fileUrl = URL(string: ViewModel.shared.firstHalfVideoUrl)!
+                ViewModel.shared.videoURL = "Second Half"
+                fileUrl = URL(string: ViewModel.shared.secondHalfVideoUrl)!
                 self.videoPlayer.play(url: fileUrl)
                 self.nextButton.setTitle("", for: .normal)
             }

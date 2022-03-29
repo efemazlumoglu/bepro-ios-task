@@ -28,13 +28,11 @@ class ViewModel {
     public var secondHalfVideoTitle: String = ""
     public var videoURL: String = ""
     
-    public static var shared = ViewModel(matchId: 25199)
+    static let shared = ViewModel()
     
     public let viewController = ViewController()
     
-    init(matchId: Int) {
-        self.matchId = matchId
-    }
+    private init(){}
     
     public func fetchVideoDetails() {
         

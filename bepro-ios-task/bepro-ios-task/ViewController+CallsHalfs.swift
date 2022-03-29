@@ -12,19 +12,19 @@ extension ViewController {
     
     // MARK: Call Halfs Method
     public func callHalfs(halfOption: String) { // for first half and second halfs of the game
-        if (self.viewModel.firstHalfVideoUrl == "" && self.viewModel.secondHalfVideoUrl == "") {
+        if (ViewModel.shared.firstHalfVideoUrl == "" && ViewModel.shared.secondHalfVideoUrl == "") {
             let alert = UIAlertController(title: "Warning", message: "Video url cannot found", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
         } else {
-            var fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
+            var fileUrl = URL(string: ViewModel.shared.firstHalfVideoUrl)!
             if halfOption == "First Half" {
-                self.viewModel.videoURL = "First Half"
-                fileUrl = URL(string: self.viewModel.firstHalfVideoUrl)!
+                ViewModel.shared.videoURL = "First Half"
+                fileUrl = URL(string: ViewModel.shared.firstHalfVideoUrl)!
                 self.changePadding()
             } else {
-                self.viewModel.videoURL = "Second Half"
-                fileUrl = URL(string: self.viewModel.secondHalfVideoUrl)!
+                ViewModel.shared.videoURL = "Second Half"
+                fileUrl = URL(string: ViewModel.shared.secondHalfVideoUrl)!
                 self.changePadding()
             }
             self.videoPlayer.play(url: fileUrl)

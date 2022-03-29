@@ -19,10 +19,10 @@ extension ViewController: UITextFieldDelegate {
         activityIndicator.startAnimating()
         
         let matchId: Int = Int(textField.text!)!
-        viewModel.matchId = matchId
+        ViewModel.shared.matchId = matchId
         if matchId != 25199 {
             textField.text = "25199"
-            viewModel.matchId = 25199
+            ViewModel.shared.matchId = 25199
             let alert = UIAlertController(title: "Warning", message: "If the match Id is not 25199 you have to be logged in", preferredStyle: UIAlertController.Style.alert)
             alert.addAction(UIAlertAction(title: "OK", style: UIAlertAction.Style.default, handler: nil))
             self.present(alert, animated: true, completion: nil)
@@ -36,7 +36,7 @@ extension ViewController: UITextFieldDelegate {
             progressBarHideBool = true
             activityIndicator.startAnimating()
             self.loadView()
-            self.viewModel.fetchVideoDetails()
+            ViewModel.shared.fetchVideoDetails()
         }
         textField.resignFirstResponder()
         return true
