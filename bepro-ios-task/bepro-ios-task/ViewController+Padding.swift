@@ -17,6 +17,7 @@ extension ViewController {
         alertController.addTextField { (textField : UITextField!) -> Void in
             textField.placeholder = "Enter Padding Value"
             textField.text = ViewModel.shared.paddingValueFirstHalf
+            textField.keyboardType = .numberPad
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
@@ -28,25 +29,27 @@ extension ViewController {
             
             ViewModel.shared.paddingValueFirstHalf = firstTextField.text!
             
-            if Int(firstTextField.text!)! <= ViewModel.shared.firstHalfData!.endMatchTime {
-                if let duration = self.videoPlayer.avPlayer.currentItem?.duration {
-                    
-                    print(Float64(Int(firstTextField.text!)!))
-                    
-                    let value = Float64(Int(firstTextField.text!)!) * 1000
-                    
-                    print(value)
-                    
-                    
+            if ViewModel.shared.videoURL == "First Half" {
+                if Int(firstTextField.text!)! <= ViewModel.shared.firstHalfData!.endMatchTime {
+                    let value = Float64(Int(firstTextField.text!)!) / 1000
                     let seekTime = CMTime(value: Int64(value), timescale: 1)
-                    
                     self.videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
                         completed in
-                        //
                     })
+                } else {
+                    self.present(alertController, animated: true)
+                }
+            } else {
+                if Int(firstTextField.text!)! <= ViewModel.shared.secondHalfData!.endMatchTime {
+                    let value = Float64(Int(firstTextField.text!)!) / 1000
+                    let seekTime = CMTime(value: Int64(value), timescale: 1)
+                    self.videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
+                        completed in
+                    })
+                } else {
+                    self.present(alertController, animated: true)
                 }
             }
-            
 
         })
         
