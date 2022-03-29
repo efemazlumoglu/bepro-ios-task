@@ -28,4 +28,14 @@ extension CMTime { // this extension is for view controller variable called tota
         guard time.isNaN == false else { return nil }
         return time
     }
+    
+    public var displaySecAndMin: Int? {
+        guard let sec = seconds?.rounded() else { return nil }
+        
+        if sec < 60 * 60 {
+            return Int(sec)
+        }
+        
+        return Int(sec)
+    }
 }

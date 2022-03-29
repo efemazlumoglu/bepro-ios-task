@@ -19,9 +19,18 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         switch component {
             case 0:
-                return 46
+                
+            var value: Int = 0
+            if ViewModel.shared.videoURL == "First Half" {
+                value = 46
+            } else {
+                value = 50
+            }
+                
+            return value
             case 1:
-                return 60
+            
+            return 59
             default:
                 return 0
         }
@@ -45,7 +54,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
                 minutes = minutes * 60000
             case 1:
                 seconds = row
-                seconds = seconds * 10000
+                seconds = seconds * 1000
             default:
                 break;
         }
@@ -57,53 +66,6 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         openTimePicker()
         
         self.videoPlayer.avPlayer.pause()
-//        let alertController = UIAlertController(title: "Change The Padding Value", message: "", preferredStyle: .alert)
-//        alertController.addTextField { (textField : UITextField!) -> Void in
-//            textField.placeholder = "Enter Padding Value"
-//            textField.text = ViewModel.shared.paddingValueFirstHalf
-//            textField.keyboardType = .numberPad
-//        }
-//
-//        let saveAction = UIAlertAction(title: "Save", style: .default, handler: { alert -> Void in
-//            let firstTextField = alertController.textFields![0] as UITextField
-//            self.playButton.isUserInteractionEnabled = false
-//            self.pauseButton.isUserInteractionEnabled = true
-//            self.activityIndicator.isHidden = false
-//            self.activityIndicator.startAnimating()
-//
-//            ViewModel.shared.paddingValueFirstHalf = firstTextField.text!
-//
-//            if ViewModel.shared.videoURL == "First Half" {
-//                if Int(firstTextField.text!)! <= ViewModel.shared.firstHalfData!.endMatchTime {
-//                    let value = Float64(Int(firstTextField.text!)!) / 1000
-//                    let seekTime = CMTime(value: Int64(value), timescale: 1)
-//                    self.videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
-//                        completed in
-//                    })
-//                } else {
-//                    self.present(alertController, animated: true)
-//                }
-//            } else {
-//                if Int(firstTextField.text!)! <= ViewModel.shared.secondHalfData!.endMatchTime {
-//                    let value = Float64(Int(firstTextField.text!)!) / 1000
-//                    let seekTime = CMTime(value: Int64(value), timescale: 1)
-//                    self.videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
-//                        completed in
-//                    })
-//                } else {
-//                    self.present(alertController, animated: true)
-//                }
-//            }
-//
-//        })
-//
-//        let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
-//
-//        alertController.addAction(saveAction)
-//        alertController.addAction(cancelAction)
-//
-//        self.present(alertController, animated: true, completion: nil)
-//
     }
     
     func openTimePicker()  {
@@ -173,4 +135,17 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         }
     }
     
+}
+
+extension AVPlayer {
+ //run this every 1 second of streaming (or use KVO)
+ //In Http stream the duration it going to increase and probably finallize near to 7% of the total duration of the song
+ func getCurrentTrackDuration () -> Float64 {
+    guard let currentItem = self.currentItem else { return 0.0 }
+    guard currentItem.loadedTimeRanges.count > 0 else { return 0.0 }
+
+     let timeInSecond = CMTimeGetSeconds((currentItem.loadedTimeRanges[0].timeRangeValue).duration);
+
+    return timeInSecond >= 0.0 ? timeInSecond : 0.0
+ }
 }
