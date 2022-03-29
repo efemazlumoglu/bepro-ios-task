@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 extension ViewController {
     
@@ -26,6 +27,27 @@ extension ViewController {
             self.activityIndicator.startAnimating()
             
             ViewModel.shared.paddingValueFirstHalf = firstTextField.text!
+            
+            if Int(firstTextField.text!)! <= ViewModel.shared.firstHalfData!.endMatchTime {
+                if let duration = self.videoPlayer.avPlayer.currentItem?.duration {
+                    
+                    print(Float64(Int(firstTextField.text!)!))
+                    
+                    let value = Float64(Int(firstTextField.text!)!) * 1000
+                    
+                    print(value)
+                    
+                    
+                    let seekTime = CMTime(value: Int64(value), timescale: 1)
+                    
+                    self.videoPlayer.avPlayer.seek(to: seekTime, completionHandler: {
+                        completed in
+                        //
+                    })
+                }
+            }
+            
+
         })
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .default, handler: { (action : UIAlertAction!) -> Void in })
