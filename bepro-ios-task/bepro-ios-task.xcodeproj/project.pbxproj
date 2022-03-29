@@ -160,12 +160,12 @@
 				F3B9477627F1CE77009DDE29 /* ViewController+TextField.swift */,
 				F3B9477A27F1D1FE009DDE29 /* ViewController+Padding.swift */,
 				F3B9477C27F1D4E7009DDE29 /* ViewController+CallsHalfs.swift */,
-				F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */,
-				F3CE6F4227E4CD1B00245B27 /* LaunchScreen.storyboard */,
-				F3CE6F4527E4CD1B00245B27 /* Info.plist */,
 				F34651E027F2F0AE009DCC53 /* ViewController+ChangeLayout.swift */,
 				F34651E227F2FA7A009DCC53 /* ViewController+FetchMatchDetails.swift */,
 				F34651E427F3054E009DCC53 /* ViewController+VideoPlayer.swift */,
+				F3CE6F4027E4CD1B00245B27 /* Assets.xcassets */,
+				F3CE6F4227E4CD1B00245B27 /* LaunchScreen.storyboard */,
+				F3CE6F4527E4CD1B00245B27 /* Info.plist */,
 			);
 			path = "bepro-ios-task";
 			sourceTree = "<group>";

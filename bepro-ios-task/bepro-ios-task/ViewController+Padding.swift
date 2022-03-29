@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import AVFoundation
 
+// MARK: Change the padding value to seek AVPlayer
 extension ViewController {
     
     public func changePadding() {

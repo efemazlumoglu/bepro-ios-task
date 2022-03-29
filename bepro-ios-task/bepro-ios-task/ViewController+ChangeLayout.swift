@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: Change the Layout after the fetch Details
 extension ViewController {
     func changeLayoutFunc() {
         ViewModel.shared.videoURL = "First Half"
