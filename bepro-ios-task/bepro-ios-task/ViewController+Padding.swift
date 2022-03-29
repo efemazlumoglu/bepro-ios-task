@@ -136,7 +136,7 @@ extension ViewController: UIPickerViewDelegate,UIPickerViewDataSource {
         self.view.addSubview(button)
         
         let title = UILabel(frame: CGRect(x: 0.0, y: self.timePicker.frame.minY, width: self.timePicker.frame.width, height: 44))
-        title.text = "Padding Value"
+        title.text = "Please Select The Start Minute of Match"
         self.view.addSubview(title)
     }
     
