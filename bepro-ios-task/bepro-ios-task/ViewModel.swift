@@ -10,6 +10,7 @@ import RxSwift
 import RxCocoa
 import UIKit
 
+// MARK: ViewModel for response from API
 public struct ViewModel {
     
     public var matchId: Int = 25199
